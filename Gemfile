@@ -14,7 +14,7 @@ end
 
 gem 'jquery-rails'
 gem 'backbone-on-rails'
-require 'ejs'
+gem 'ejs'
 
 gem 'devise'
-gem 'rails_12factor', group: :production
+# gem 'rails_12factor', group: :production
