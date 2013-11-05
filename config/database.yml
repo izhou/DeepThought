@@ -7,7 +7,8 @@ development:
   adapter: postgresql
   database: deep_thought_development
   host: localhost
-  username: Izhou
+  timeout: 5000
+  pool: 5
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -16,10 +17,12 @@ test:
   adapter: postgresql
   database: deep_thought_test
   host: localhost
-  username: Izhou
+  timeout: 5000
+  pool: 5
 
 production:
   adapter: postgresql
   database: deep_thought_production
   host: localhost
-  username: Izhou
+  timeout: 5000
+  pool: 5
