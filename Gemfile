@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
+ruby '2.0.0'
 gem 'rails', '3.2.14'
-
 
 gem 'pg'
 
@@ -17,4 +17,4 @@ gem 'backbone-on-rails'
 gem 'ejs'
 
 gem 'devise'
-# gem 'rails_12factor', group: :production
+gem 'rails_12factor', group: :production
