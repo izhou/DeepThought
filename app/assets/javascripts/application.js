@@ -12,8 +12,11 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.serializeJSON.min
 //= require underscore
 //= require backbone
+//= require backbone.marionette
+//= require overrides
 //= require deep_thought
 //= require_tree ../templates
 //= require_tree ./models

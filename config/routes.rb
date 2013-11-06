@@ -2,6 +2,7 @@ DeepThought::Application.routes.draw do
   resources :entries
   devise_for :users
 
+  root to: "entries#root"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

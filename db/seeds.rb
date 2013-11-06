@@ -5,5 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-
+ 
 home = Entry.create(title: 'Home')
+child1 = home.children.create title:'child1'
+child2 = home.children.create title:'child2'
+grandchild = child1.children.create title:'child2' 
