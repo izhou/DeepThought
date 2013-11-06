@@ -2,8 +2,8 @@ class EntriesController < ApplicationController
   respond_to :json
 
   def index
-    @entries = Entry.all
-    render json: @entries
+    @root = Entry.find(1)
+    render json: @root
   end
 
   def show
@@ -11,11 +11,9 @@ class EntriesController < ApplicationController
     render json: @entry
   end
 
-  def create
-    @entry = Entry.create(params[:entry])
-    @entry.parent.child_ids.append(@entry.id)
-    
-    render json: @entry
-  end
+  # def create
+  #   @entry = Entry.create(params[:entry])
+  #   render json: @entry
+  # end
 
 end

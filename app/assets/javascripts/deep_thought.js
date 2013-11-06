@@ -4,11 +4,10 @@ window.DeepThought = {
   Views: {},
   Routers: {},
   initialize: function() {
-    console.log("ffoooo");
-    var entries = new DeepThought.Collections.EntryTree();
-    entries.fetch({
+    var rootCollection = new DeepThought.Collections.EntryTree();
+    rootCollection.fetch({
       success: function(data) {
-        console.log("successhere");
+        console.log(data);
         DeepThought.router = new DeepThought.Router(data);
         Backbone.history.start();
       }
