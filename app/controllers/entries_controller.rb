@@ -19,13 +19,7 @@ class EntriesController < ApplicationController
 
   def create
     @entry = Entry.new(params[:entry])
-    @entry.save!
+    @entry.save
     render json: @entry
   end
-
-  # def create
-  #   @entry = Entry.create(params[:entry])
-  #   render json: @entry
-  # end
-
 end

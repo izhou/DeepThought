@@ -4,8 +4,8 @@ window.DeepThought = {
   Views: {},
   Routers: {},
   initialize: function() {
-    var rootCollection = new DeepThought.Collections.EntryTree();
-    rootCollection.fetch({
+    DeepThought.rootCollection = new DeepThought.Collections.EntryTree();
+    DeepThought.rootCollection.fetch({
       success: function(data) {
         DeepThought.router = new DeepThought.Router(data);
         Backbone.history.start();
@@ -15,3 +15,31 @@ window.DeepThought = {
 };
 
 
+
+// [{"id":1,
+//   "title":"Home",
+//   "created_at":"2013-11-06T01:50:54Z",
+//   "updated_at":"2013-11-06T01:50:54Z",
+//   "ancestry":null,
+//   "parent_id":0,
+//   "children":[
+//     {"id":3,
+//       "title":"helloa",
+//       "created_at":"2013-11-06T01:50:54Z",
+//       "updated_at":"2013-11-07T04:17:38Z",
+//       "ancestry":"1","parent_id":1},
+//     {"id":2,
+//       "title":"this can change",
+//       "created_at":"2013-11-06T01:50:54Z",
+//       "updated_at":"2013-11-07T01:41:12Z",
+//       "ancestry":"1",
+//       "parent_id":1,
+//       "children":[
+//         {"id":4,
+//         "title":"functionsa",
+//         "created_at":"2013-11-06T01:50:54Z",
+//         "updated_at":"2013-11-07T04:26:10Z",
+//         "ancestry":"1/2","parent_id":2
+//       }]
+//     }]
+//   },
