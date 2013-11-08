@@ -22,4 +22,9 @@ class EntriesController < ApplicationController
     @entry.save
     render json: @entry
   end
+
+  def destroy
+    @entry = Entry.find(params[:id])
+    @entry.delete
+  end
 end
