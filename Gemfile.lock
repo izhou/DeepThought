@@ -122,6 +122,8 @@ GEM
     uglifier (2.3.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    uikit-rails (0.0.2)
+      railties (>= 3.1.0)
     warden (1.2.3)
       rack (>= 1.0)
 
@@ -140,3 +142,4 @@ DEPENDENCIES
   rails (= 3.2.14)
   sass-rails (~> 3.2.3)
   uglifier (>= 1.0.3)
+  uikit-rails

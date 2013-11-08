@@ -25,6 +25,7 @@ class EntriesController < ApplicationController
 
   def destroy
     @entry = Entry.find(params[:id])
-    @entry.delete
+    @entry.destroy
+    
   end
 end
