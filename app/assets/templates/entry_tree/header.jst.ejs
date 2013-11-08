@@ -1,0 +1,12 @@
+<%if(node.get("id")!== 1) {%>
+  <ul class="uk-breadcrumb">
+    <%ancestry = node.get("ancestry").split("/")%>
+    <%ancestry.forEach(function(id){%>
+      <%ancestor = DeepThought.rootCollection.findWhere({id: parseInt(id)})%>
+      <li><a href="#/entries/<%=id%>"><%=ancestor.get("title")%></a></li>
+    <%})%>
+    <li class="uk-active"><span><%=node.get("title")%></span></li>
+  </ul>
+<%}%>
+
+<h1><%=node.escape("title")%></h1>

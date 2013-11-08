@@ -11,4 +11,5 @@
  *= require_self
  *= require_tree .
  *= require uikit.almostflat
+ *= require custom-style
  */

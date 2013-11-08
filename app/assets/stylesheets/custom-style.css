@@ -1,0 +1,16 @@
+#main span {
+    display: table-cell;
+    vertical-align: middle;
+    width:250px;
+}
+
+ul
+{
+  list-style-type: none;
+}
+
+label
+{ display: inline-block;
+  min-width:20px;
+  text-align: left
+}

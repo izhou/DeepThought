@@ -29,6 +29,10 @@ DeepThought.Router = Backbone.Router.extend({
 
     var render = nodeShow.render();
     $("#content").html(render.$el);
-    $("#content").prepend(node.get("title"));
+
+    var header = JST['entry_tree/header']({
+      node: node
+    });
+    $("#content").prepend(header);
   }
 });

@@ -21,4 +21,3 @@ gem 'devise'
 gem 'cancan'
 
 gem 'ancestry'
-gem 'zurb-foundation'
