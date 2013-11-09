@@ -1,14 +1,17 @@
 
 <form id="form<%=id%>">
 
-  <button class="uk-button-link toggle-button">+</button>
+  <input type="button" class="uk-button-link view-toggle" 
+    id="button<%=id%>" value="<%= expanded ? '-' : '+' %>">
 
   <label for "<%=title%>">
     <a href="#/entries/<%=id%>">●</a>
   </label>
-  
-  <input type="text" class="uk-form-blank uk-form-width-medium"
-    value="<%=title%>" name="entry[title]">
+   <textarea class="uk-form-blank"
+    name="entry[title]"><%=title%></textarea>
+
+ <!--  <input type="text" class="uk-form-blank"
+    value="<%=title%>" name="entry[title]"> -->
   <input type="hidden" value="<%=parent_id%>" name="entry[parent_id]">
 </form>
 

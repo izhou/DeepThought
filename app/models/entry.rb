@@ -1,5 +1,5 @@
 class Entry < ActiveRecord::Base
-  attr_accessible :title, :ancestry, :parent_id
+  attr_accessible :title, :ancestry, :parent_id, :expanded
   has_ancestry
 
   def as_json(options = {})

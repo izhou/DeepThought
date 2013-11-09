@@ -4,13 +4,49 @@
     width:250px;
 }
 
-ul
-{
+ul {
   list-style-type: none;
 }
 
-label
-{ display: inline-block;
+.uk-navbar {
+  color: gray
+}
+
+label { 
+  display: inline-block;
   min-width:20px;
   text-align: left
+}
+
+.view-toggle {
+  opacity: 0;
+  text-decoration: none;
+}
+
+
+.uk-panel-box {
+  min-height: 800px;
+  margin: 20px;
+}
+
+html {
+  height: 150%;
+}
+
+#content { 
+margin: 30px;}
+
+.uk-form-blank {
+  width: 92%;
+  height:100%;
+}
+
+textarea {
+  resize:none;
+}
+
+#stars {
+  width:100%;
+  color:gray;
+  background-color: gray
 }

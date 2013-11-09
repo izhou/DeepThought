@@ -5,7 +5,11 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
   
   events: {
     "change": "saveEntry",
+    "click .view-toggle" : "toggleView",
+    "mouseover" : "displayButton",
+    "mouseout" : "hideButton",
     "keydown :input" : "keyHandler"
+
   },
 
   initialize: function(options) {
@@ -22,11 +26,33 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
 
   saveEntry: function() {
     event.stopPropagation();
-    console.log("here, bitch");
-    console.log(this.model);
     var id = this.model.get("id");
     var formData = $("#form"+id).serializeJSON();
     this.model.save(formData);
+  },
+
+  displayButton: function() {
+    event.stopPropagation();
+    $("#button"+this.model.id).css({opacity: 1});
+  },
+
+  hideButton: function() {
+    event.stopPropagation();
+    $("#button"+this.model.id).css({opacity: 0});
+  },
+
+  toggleView: function(){
+    event.preventDefault();
+    event.stopPropagation();
+    $("#ul"+this.model.get("id")).toggle("slow");
+    var button = document.getElementById("button"+this.model.get("id"))
+    if (this.model.get("expanded")) {
+      this.model.set("expanded", false);
+      button.value="+";
+    } else {
+      this.model.set("expanded", true);
+      button.value="-";
+    }
   },
 
   keyHandler:function() {
@@ -37,11 +63,11 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
       case 13:
         event.preventDefault();
         var parent_id = this.model.get("parent_id")
-        this.model.collection.create({title:"", parent_id:parent_id});
         var newModelForm = JST['entry_tree/nodeForm']({
           id: DeepThought.rootCollection.length - 1,
           title:"",
-          parent_id: parent_id
+          parent_id: parent_id,
+          expanded: true
         })
         $("#ul"+parent_id).append("<li>"+newModelForm+"</li>");
 
