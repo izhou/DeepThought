@@ -111,6 +111,9 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
       case 39: //right arrow
         this.zoomIn(event);
         break;
+      case 37: //left arrow
+        this.zoomOut(event);
+        break;
     }
     this.$el.focus();
   },
@@ -118,6 +121,15 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
   zoomIn:function(event) {
     if (event.shiftKey && event.ctrlKey) {
       DeepThought.router.navigate('#/entries/'+this.model.get("id"), true);
+    }
+  },
+
+  zoomOut:function(event) {
+    console.log("yay");
+    if (event.shiftKey && event.ctrlKey) {
+      var grandparent_id = this.findGrandparent(this.model);
+      if (grandparent_id)
+        DeepThought.router.navigate('#/entries/'+grandparent_id, true);
     }
   },
 
@@ -142,8 +154,7 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
     event.preventDefault();
     var originalCollection = this.model.collection;
     if (event.shiftKey) {  //tab backwards
-      var ancestry = this.model.get("ancestry").split("/");
-      var grandparent = ancestry[ancestry.length-2]
+      var grandparent = this.findGrandparent(this.model);
       if (grandparent) {
         var newParentID = grandparent;
         this.$el.insertAfter(this.$el.parent().parent());
@@ -175,6 +186,11 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
     }
     if (prevElement)
       this.focusOnTextArea(prevElement);
+  },
+
+  findGrandparent: function(model) {
+    var ancestry = model.get("ancestry").split("/");
+    return ancestry[ancestry.length-2];
   },
 
   findDeepestPrev: function(el) {
