@@ -34,7 +34,11 @@ html {
 }
 
 #content { 
-margin: 30px;}
+margin: 35px;}
+
+#ul1 {
+  padding: 0px;
+}
 
 .uk-form-blank {
   width: 92%;

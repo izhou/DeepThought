@@ -6,13 +6,29 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
   tagName: "li",
   itemView: DeepThought.Views.treeView,
 
+  initialEvents: {
+    "keydown :input" : "testing"
+  },
+
+  testing: function() {
+    console.log("wee");
+  },
+
   events: {
     "change": "saveEntry",
     "click .view-toggle" : "toggleView",
     "mouseover" : "displayButton",
     "mouseout" : "hideButton",
     "keydown :input" : "keyHandler",
-
+  },
+  
+  onRender: function() {
+    var that = this;
+    if (!this.model.get("expanded")) {
+      setTimeout(function() {
+        $("#ul"+that.model.get("id")).toggle();
+      }, 0);
+    }
   },
 
   focusOnTextArea: function(el) {
@@ -57,6 +73,7 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
   toggleView: function(){
     event.preventDefault();
     event.stopPropagation();
+    console.log(this.model);
     $("#ul"+this.model.get("id")).toggle("slow");
     var button = document.getElementById("button"+this.model.get("id"))
     console.log("here");
@@ -91,8 +108,17 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
       case 40: //down arrow
         this.goDown(event);
         break;
+      case 39: //right arrow
+        this.zoomIn(event);
+        break;
     }
     this.$el.focus();
+  },
+
+  zoomIn:function(event) {
+    if (event.shiftKey && event.ctrlKey) {
+      DeepThought.router.navigate('#/entries/'+this.model.get("id"), true);
+    }
   },
 
   createEntry: function(event) {
@@ -118,9 +144,10 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
     if (event.shiftKey) {  //tab backwards
       var ancestry = this.model.get("ancestry").split("/");
       var grandparent = ancestry[ancestry.length-2]
-      var newParentID = grandparent || this.model.get("parent_id");
-
-      this.$el.insertAfter(this.$el.parent().parent());
+      if (grandparent) {
+        var newParentID = grandparent;
+        this.$el.insertAfter(this.$el.parent().parent());
+      }      
     } else {  //tab forward
       previousElement = _.last(this.$el.prev());
       console.log(previousElement)
@@ -130,10 +157,10 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
         var newParentID = this.model.parent_id;
       this.$el.appendTo($("#ul"+newParentID));
     }
-    
-    this.model.save({parent_id: newParentID});
-    this.focusOnTextArea(this.el);
-
+    if (newParentID) {  
+      this.model.save({parent_id: newParentID});
+      this.focusOnTextArea(this.el);
+    }
   },
 
   goUp: function(event) {

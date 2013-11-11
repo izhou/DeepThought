@@ -1,3 +1,4 @@
+<div class="header">
 <%if(node.get("id")!== 1) {%>
   <ul class="uk-breadcrumb">
     <%var ancestry = node.get("ancestry").split("/")%>
@@ -8,9 +9,9 @@
     <li class="uk-active"><span><%=node.get("title")%></span></li>
   </ul>
   <hr>
+
+  <h1><%=node.escape("title")%></h1>
+<%} else {%>
+  <br>
 <%}%>
-
-
-
-
-<h1><%=node.escape("title")%></h1>
+</div>
