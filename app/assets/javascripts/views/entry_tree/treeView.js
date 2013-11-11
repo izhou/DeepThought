@@ -15,6 +15,10 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
 
   },
 
+  focusOnTextArea: function(el) {
+    el.firstElementChild.getElementsByTagName("textarea")[0].focus();
+  },
+
   initialize: function(options) {
     var children = DeepThought.rootCollection.where({parent_id: this.model.id})
     this.collection = new DeepThought.Collections.EntryTree(children);
@@ -33,13 +37,10 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
   appendHtml: function(collectionView,itemView) {
     if (itemView.model.get("is_new")) {
       itemView.model.set("parent_id", itemView.model.get("parent_id"))
-      var newItemView = JST['entry_tree/nodeForm']({
-        model: itemView.model
-      });
-      $(this.el.parentElement).append(itemView.el);
+      $(itemView.el).insertAfter(this.el);
+      this.focusOnTextArea(itemView.el);
     } else {
       collectionView.$("#ul"+itemView.model.get("parent_id")).append(itemView.el);
-      //collectionView.$("#ul"+this.model.get("id")).append(itemView.el);
     }
   },
 
@@ -107,8 +108,8 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
 
   deleteEntry: function(event) {
     event.preventDefault();
+    this.goUp(event);
     this.model.destroy();
-    this.$el.prev().focus(); 
   },
 
   changeTab: function(event) {
@@ -118,6 +119,8 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
       var ancestry = this.model.get("ancestry").split("/");
       var grandparent = ancestry[ancestry.length-2]
       var newParentID = grandparent || this.model.get("parent_id");
+
+      this.$el.insertAfter(this.$el.parent().parent());
     } else {  //tab forward
       previousElement = _.last(this.$el.prev());
       console.log(previousElement)
@@ -125,44 +128,58 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
         var newParentID = parseInt(previousElement.id);
       else
         var newParentID = this.model.parent_id;
+      this.$el.appendTo($("#ul"+newParentID));
     }
-    console.log(newParentID);
-    this.$el.appendTo($("#ul"+newParentID));
+    
     this.model.save({parent_id: newParentID});
-    var that = this;
-    setTimeout(function(){
-      that.$el.focus();
-    }, 0);
-    console.log("i reach here");
-    console.log($(":focus"));
+    this.focusOnTextArea(this.el);
+
   },
 
   goUp: function(event) {
     event.preventDefault();
-    previousElement = this.$el.prev()[0];
-    if (previousElement) {
-      console.log(previousElement);
-      previousElement.focus();
+    if (this.$el.prev()[0]) {
+      var prevElement = this.findDeepestPrev(this.$el.prev()[0]);
+    } else {
+      var parent = this.$el.parent().parent()[0];
+      if (parent.tagName === "LI") {
+        var prevElement = parent;
+      }
+    }
+    if (prevElement)
+      this.focusOnTextArea(prevElement);
+  },
+
+  findDeepestPrev: function(el) {
+    if (el.children[1].children.length === 0) {
+      return el;
+    } else {
+      var lastChild = _.last(el.children[1].children);
+      return this.findDeepestPrev(lastChild);
     }
   },
 
   goDown: function(event) {
     event.preventDefault();
-    console.log(this);
-    if (this.model.get("child_ids")[0]) {
-      console.log("babies");
-      var nextElement = document.getElementById(_.last(this.model.get("child_ids")))
-    } else if (this.$el.next()[0]){
-      console.log("bros");
-      var nextElement = this.$el.next()[0];
+    if (this.$el.children()[1].children[0]) {
+      var nextElement = this.$el.children()[1];
     } else {
-      var nextElement = "fuck you";
+      var nextSibling = this.findNextSibling(this.el);
+      if (nextSibling.tagName === "LI") {
+        var nextElement = nextSibling;
+      }
     }
+    if (nextElement)
+      this.focusOnTextArea(nextElement);
 
-    var nextForm = nextElement.firstElementChild;
-    console.log(nextForm.getElementsByTagName("textarea"));
-    nextForm.getElementsByTagName("textarea")[0].focus();
+  },
 
+  findNextSibling: function(el) {
+    if (el.nextElementSibling) {
+      return el.nextElementSibling;
+    } else if (el.parentElement) {
+      return this.findNextSibling(el.parentElement.parentElement);
+    }
   }
 
 })
