@@ -5,6 +5,7 @@ DeepThought.Views.nodeView = Backbone.Marionette.CollectionView.extend({
   id: "ul1",
   initialize: function() {
     this.root_id = this.options.root_id;
+    console.log(this.collection);
   },
 
   emptyView: DeepThought.Views.childlessView,
@@ -12,8 +13,9 @@ DeepThought.Views.nodeView = Backbone.Marionette.CollectionView.extend({
   onRender: function() {
     var that = this;
     setTimeout(function() {
-      if (that.el.firstChild.tagName === "LI")
+      if (that.el.firstChild.tagName === "LI" && $(":focus").length === 0) {
         that.focusOnTextArea(that.el.firstChild);
+      }
   
       var headerShow = new DeepThought.Views.headerView({
         model: DeepThought.rootCollection.get(that.root_id)
@@ -26,7 +28,8 @@ DeepThought.Views.nodeView = Backbone.Marionette.CollectionView.extend({
   },
 
   itemViewOptions: function(){
-    return { root_id: this.root_id }
+    return { root_id: this.root_id,
+      siblings: this.collection }
   },
 
   focusOnTextArea: function(el) {

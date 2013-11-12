@@ -15,11 +15,12 @@ DeepThought.Views.childlessView = Backbone.Marionette.ItemView.extend({
     var that = this;
     DeepThought.rootCollection.create({
       title:"",
-      parent_id: this.model.id
-    }, {wait: true, success: function() {
+      parent_id: this.model.id,
+      rank: 1
+    });
+    DeepThought.rootCollection.fetch({wait: true, success: function() {
       Backbone.history.stop();
       Backbone.history.start();
-    }});
-    ;
+    }})
   },
 });
