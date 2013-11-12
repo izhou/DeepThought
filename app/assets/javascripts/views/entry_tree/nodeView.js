@@ -13,7 +13,15 @@ DeepThought.Views.nodeView = Backbone.Marionette.CollectionView.extend({
     var that = this;
     setTimeout(function() {
       if (that.el.firstChild.tagName === "LI")
-      that.focusOnTextArea(that.el.firstChild);
+        that.focusOnTextArea(that.el.firstChild);
+  
+      var headerShow = new DeepThought.Views.headerView({
+        model: DeepThought.rootCollection.get(that.root_id)
+      });
+      $("#content").prepend(headerShow.render().$el);
+      if ($(":focus").length === 0) {
+        $("#ta"+that.root_id).focus();
+      }
     }, 0);
   },
 

@@ -1,23 +1,27 @@
 <div class="header">
-<%if(node.get("id")!== 1) {%>
+<%if(model.get("id")!== 1) {%>
   <ul class="uk-breadcrumb">
-    <%var ancestry = node.get("ancestry").split("/")%>
+    <%var ancestry = model.get("ancestry").split("/")%>
     <%ancestry.forEach(function(id){%>
       <%var ancestor = DeepThought.rootCollection.findWhere({id: parseInt(id)})%>
       <li><a href="#/entries/<%=id%>"><%=ancestor.get("title")%></a></li>
     <%})%>
-    <li class="uk-active"><span><%=node.get("title")%></span></li>
+    <li class="uk-active"></li>
   </ul>
   <hr>
+</div>
 
-  <h1>
-  <% var model_id = node.get('id')%>
-  <form id="form<%=model_id%>">
-     <textarea class="uk-form-blank" id ="ta<%=model_id%>"
-      name="entry[title]"><%=node.get('title')%></textarea>
-  </form>
-  </h1>
+<h1>
+<% var model_id = model.get('id')%>
+<ul id="ul0">
+  <li id="<%model_id%>">
+    <form id="form<%=model_id%>">
+       <textarea class="uk-form-blank" id ="ta<%=model_id%>"
+        name="entry[title]"><%=model.get('title')%></textarea>
+    </form>
+  </li>
+</ul>
+</h1>
 <%} else {%>
   <br>
 <%}%>
-</div>

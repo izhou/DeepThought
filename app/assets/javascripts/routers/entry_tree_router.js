@@ -12,9 +12,10 @@ DeepThought.Router = Backbone.Router.extend({
   nodeShow: function(id){
     var node = DeepThought.rootCollection.get(id);
     var children = DeepThought.rootCollection.where({parent_id : parseInt(id)});
-    
+    var sortedChildren = _.sortBy(children, function(child){
+      return child.get("title")});
     var nodeShow = new DeepThought.Views.nodeView({
-      collection: new DeepThought.Collections.EntryTree(children),
+      collection: new DeepThought.Collections.EntryTree(sortedChildren),
       itemView: DeepThought.Views.treeView,
       root_id: id
     });
@@ -22,9 +23,15 @@ DeepThought.Router = Backbone.Router.extend({
     var render = nodeShow.render();
     $("#content").html(render.$el);
 
-    var header = JST['entry_tree/header']({
-      node: node
-    });
-    $("#content").prepend(header);
+    // var headerShow = new DeepThought.Views.headerView({
+    //   model: node
+    // });
+
+    // $("#content").prepend(headerShow.render().$el)
+
+    // var header = JST['entry_tree/header']({
+    //   node: node
+    // });
+    // $("#content").prepend(header);
   }
 });
