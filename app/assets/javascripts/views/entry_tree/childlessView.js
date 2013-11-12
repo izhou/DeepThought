@@ -9,34 +9,19 @@ DeepThought.Views.childlessView = Backbone.Marionette.ItemView.extend({
     this.root_id = parseInt(this.options.root_id);
     console.log("here");
     this.model = DeepThought.rootCollection.get(this.root_id);
-    this.collection = new DeepThought.Collections.EntryTree();
   },
 
   makeNewTask: function(){
-    this.collection.create({
+    var that = this;
+    DeepThought.rootCollection.create({
       title:"",
       parent_id: this.model.id
-    }, {wait: true});
-    DeepThought.router.navigate('/entries/'+this.model.get("id"), true);
+    }, {wait: true, success: function() {
+      Backbone.history.stop();
+      Backbone.history.start();
+    }});
+    ;
   },
-
-  rerender: function(){
-    var node = this.model
-    console.log(DeepThought.rootCollection)
-    var children = DeepThought.rootCollection.where({parent_id : parseInt(this.root_id)});
-    
-    var nodeShow = new DeepThought.Views.nodeView({
-      collection: new DeepThought.Collections.EntryTree(children),
-      itemView: DeepThought.Views.treeView,
-      root_id: this.root_id
-    });
-
-    var render = nodeShow.render();
-    $("#content").html(render.$el);      
-
-  }
-
-
 
   // makeNewTask: function(){
   //   // DeepThought.rootCollection.create({

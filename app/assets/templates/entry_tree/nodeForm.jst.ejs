@@ -1,15 +1,16 @@
 
-<form id="form<%=model.get('id')%>">
+<% var model_id = model.get('id')%>
+<form id="form<%=model_id%>">
 
   <input type="button" class="uk-button-link view-toggle" 
-    id="button<%=model.get('id')%>" 
+    id="button<%=model_id%>" 
     value="<%= model.get("expanded") ? '-' : '+' %>">
 
   <label for "<%=model.get('title')%>">
-    <a href="#/entries/<%=model.get('id')%>">●</a>
+    <a href="#/entries/<%=model_id%>">●</a>
   </label>
-   <textarea class="uk-form-blank"
+   <textarea class="uk-form-blank" id ="ta<%=model_id%>"
     name="entry[title]"><%=model.get('title')%></textarea>
 </form>
 
-<ul id="ul<%=model.get('id')%>"></ul>
+<ul id="ul<%=model_id%>"></ul>

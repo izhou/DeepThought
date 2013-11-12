@@ -10,7 +10,13 @@
   </ul>
   <hr>
 
-  <h1><%=node.escape("title")%></h1>
+  <h1>
+  <% var model_id = node.get('id')%>
+  <form id="form<%=model_id%>">
+     <textarea class="uk-form-blank" id ="ta<%=model_id%>"
+      name="entry[title]"><%=node.get('title')%></textarea>
+  </form>
+  </h1>
 <%} else {%>
   <br>
 <%}%>

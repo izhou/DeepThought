@@ -5,7 +5,6 @@ DeepThought.Views.nodeView = Backbone.Marionette.CollectionView.extend({
   id: "ul1",
   initialize: function() {
     this.root_id = this.options.root_id;
-    var that = this;
   },
 
   emptyView: DeepThought.Views.childlessView,

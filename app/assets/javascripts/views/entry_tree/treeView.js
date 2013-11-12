@@ -154,18 +154,26 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
     event.preventDefault();
     var originalCollection = this.model.collection;
     if (event.shiftKey) {  //tab backwards
-      var grandparent = this.findGrandparent(this.model);
-      if (grandparent) {
-        var newParentID = grandparent;
+      var grandparent_id = this.findGrandparent(this.model);
+      if (grandparent_id) {
+        var newParentID = grandparent_id;
         this.$el.insertAfter(this.$el.parent().parent());
       }      
     } else {  //tab forward
       previousElement = _.last(this.$el.prev());
-      console.log(previousElement)
-      if (previousElement) 
+      if (previousElement) {
         var newParentID = parseInt(previousElement.id);
-      else
+      } else {
         var newParentID = this.model.parent_id;
+      }
+      if (newParentID) {
+        var newParent = DeepThought.rootCollection.get(newParentID)
+        if (!newParent.get("expanded")) {
+          newParent.set("expanded", true);
+          newParent.save();
+        }
+      }
+      $("#ul"+newParentID).show();
       this.$el.appendTo($("#ul"+newParentID));
     }
     if (newParentID) {  
