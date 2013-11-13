@@ -6,7 +6,7 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
   tagName: "li",
   itemView: DeepThought.Views.treeView,
   itemViewOptions: function(){
-    siblings: this.collection
+    return {siblings: this.siblings};
   },
 
   events: {
@@ -32,30 +32,28 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
 
   initialize: function(options) {
     var children = this.model.collection.where({parent_id: this.model.id})
-    this.siblings = this.options.siblings;
-    //var children = DeepThought.rootCollection.where({parent_id: this.model.id});
-    var sortedChildren = _.sortBy(children, function(child){child.get("rank")});
+    
     this.collection = new DeepThought.Collections.EntryTree(children);
 
+    this.siblings = this.options.siblings;
+    this.siblings[this.model.get("id")] = this.collection
+    DeepThought.collections[this.model.get("id")] = this.collection;
     this.parent_id =  this.model.get("parent_id");
     (this.$el).attr("id",this.model.get("id"));
-    this.collection.bind('refresh', this.render);
   },
 
   saveEntry: function() {
     event.stopPropagation();
     var id = this.model.get("id");
-    console.log("saveEntry, id:"+id+" parent:"+this.model.get("parent_id"));
     var formData = $("#form"+id).serializeJSON();
     this.model.save(formData);
-    DeepThought.rootCollection.fetch();
   },
 
   appendHtml: function(collectionView,itemView) {
-    if (itemView.model.get("is_new")) {
-      itemView.model.set("parent_id", itemView.model.get("parent_id"))
-      $(itemView.el).insertAfter(this.el);
-      this.focusOnTextArea(itemView.el);
+    var itemIndex = itemView.model.collection.indexOf(itemView.model);
+    var prevItem = itemView.model.collection.models[itemIndex - 1]
+    if (itemView.model.get("is_new") && prevItem) {
+      collectionView.$("#"+prevItem.get("id")).after(itemView.el);
     } else {
       collectionView.$("#ul"+itemView.model.get("parent_id")).append(itemView.el);
     }
@@ -145,83 +143,79 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
   createEntry: function(event) {
     event.preventDefault();
     var rank = this.findNewRank(this);
-    console.log(rank);
-    var parent_id = this.model.get("parent_id");
-    this.collection.create({
+    var that = this;
+    console.log(DeepThought.collections[this.parent_id]);
+    DeepThought.collections[this.parent_id].create({
       title:"", 
-      parent_id: parent_id,
+      parent_id: this.parent_id,
       rank: rank,
       is_new: true},
-      {wait: true}
+      {wait: true, success: function() {
+        that.focusOnTextArea(that.el.nextSibling);
+      }}
     );
   },
 
   findNewRank: function(view){
-    if (!view.el.nextSibling) {
-      return view.model.get("rank") + 1;
+    var siblings = DeepThought.collections[view.parent_id]
+    var index = siblings.models.indexOf(view.model);
+    var rank = view.model.get("rank");
+    if (index === siblings.models.length - 1) {
+      return rank + 1;
     } else {
-      var nextRank = DeepThought.rootCollection.get(view.el.nextSibling.id).get("rank");
-      console.log(nextRank);
-      var prevRank = view.model.get("rank");
-      console.log(prevRank);
-      return (nextRank + prevRank) / 2;
+      return (rank + siblings.models[index+1].get("rank"))/2;
     }
-    // var model_index = model.collection.indexOf(model);
-    // if (model_index === model.collection.length - 1) {
-    //   return model.get("rank") + 1;
-    // } else {
-    //   return (model.get("rank") + model.collection.models[model_index + 1].get("rank"))/2;
-    // }
   },
 
   deleteEntry: function(event) {
     event.preventDefault();
     var that = this;
     this.goUp(event);
-    this.model.collection.fetch({
-      success: function() {
-        that.model.destroy();
-      }
-    });
+    this.model.destroy();
   },
 
   changeTab: function(event) {
     event.preventDefault();
-    var originalCollection = this.model.collection;
-    if (event.shiftKey) {  //tab backwards
+    var that = this;
+    if (event.shiftKey) { //tab back
       var grandparent_id = this.findGrandparent(this.model);
-      if (grandparent_id) {
-        var newParentID = grandparent_id;
-       this.$el.insertAfter(this.$el.parent().parent());
-      }      
-    } else {  //tab forward
-      previousElement = _.last(this.$el.prev());
-      if (previousElement) {
-        var newParentID = parseInt(previousElement.id);
-      } else {
-        var newParentID = this.model.parent_id;
+      if (DeepThought.collections[grandparent_id]) {
+        var parent = DeepThought.collections[grandparent_id].get(this.model.get("parent_id"));
+        var parentIdx = DeepThought.collections[grandparent_id].indexOf(parent);
+        if (parent === _.last(DeepThought.collections[grandparent_id].models)) {
+          var newRank = parent.get("rank") + 1;
+        } else {
+          var nextRank = DeepThought.collections[grandparent_id].models[parentIdx+1].get("rank");
+          var newRank = (parent.get("rank" + nextRank))/2
+        }
+        this.model.save({parent_id: grandparent_id, rank: newRank}, {success: function(){
+          DeepThought.collections[that.parent_id].remove(that.model);
+          DeepThought.collections[grandparent_id].add(that.model);
+          that.focusOnTextArea($("#"+that.model.id));
+        }});
       }
-     $("#ul"+newParentID).show();
-     this.$el.appendTo($("#ul"+newParentID));
+    } else {
+      var position = DeepThought.collections[this.parent_id].models.indexOf(this.model);
+      if (position !== 0) {
+        var previousSibling = DeepThought.collections[this.parent_id].models[position - 1];
+
+        if (_.first(previousSibling.models)) {
+          var newRank = (_.first(previousSibling.models).get("rank"))/2;
+        } else {
+          var newRank = 1;
+        }
+        this.model.save({parent_id: previousSibling.get("id"), rank:newRank}, {success: function(){
+          DeepThought.collections[that.parent_id].remove(that.model);
+          DeepThought.collections[previousSibling.get("id")].add(that.model);
+          that.focusOnTextArea($("#"+that.model.id)[0]);
+        }})
+      }
     }
-    if (newParentID) {
-      var newRank = this.findNewRank(this);
-      this.model.save({parent_id: newParentID, rank:newRank});
-      this.focusOnTextArea(this.el);
+  },
 
-      // var that = this;
-
-      // DeepThought.rootCollection.fetch({success: function() {
-      //   DeepThought.rootCollection.get(newParentID).save({expanded: true});
-      //   Backbone.history.stop();
-      //   Backbone.history.start()
-
-      //   setTimeout(function() {
-      //     console.log("iamhere");
-      //     that.focusOnTextArea(that.el);
-      //   }, 0) 
-      // }});
-    }
+  findGrandparent: function(model) {
+    var ancestry = model.get("ancestry").split("/");
+    return ancestry[ancestry.length-2];
   },
 
   goUp: function(event) {
@@ -239,11 +233,6 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
     } else if ($("#ul0")[0]) {
       this.focusOnTextArea($("#ul0")[0]);
     }
-  },
-
-  findGrandparent: function(model) {
-    var ancestry = model.get("ancestry").split("/");
-    return ancestry[ancestry.length-2];
   },
 
   findDeepestPrev: function(el) {

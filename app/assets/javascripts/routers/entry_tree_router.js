@@ -11,11 +11,10 @@ DeepThought.Router = Backbone.Router.extend({
 
   nodeShow: function(id){
     var node = DeepThought.rootCollection.get(id);
+    DeepThought.collections = new Object();
     var children = DeepThought.rootCollection.where({parent_id : parseInt(id)});
-    var sortedChildren = _.sortBy(children, function(child){
-      return child.get("rank")});
     var nodeShow = new DeepThought.Views.nodeView({
-      collection: new DeepThought.Collections.EntryTree(sortedChildren),
+      collection: new DeepThought.Collections.EntryTree(children),
       itemView: DeepThought.Views.treeView,
       root_id: id
     });

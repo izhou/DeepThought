@@ -6,6 +6,7 @@ DeepThought.Views.nodeView = Backbone.Marionette.CollectionView.extend({
   initialize: function() {
     this.root_id = this.options.root_id;
     console.log(this.collection);
+    DeepThought.collections[this.root_id] = this.collection;
   },
 
   emptyView: DeepThought.Views.childlessView,
@@ -28,8 +29,10 @@ DeepThought.Views.nodeView = Backbone.Marionette.CollectionView.extend({
   },
 
   itemViewOptions: function(){
+    var siblings = new Object();
+    siblings[this.root_id] = this.collection;
     return { root_id: this.root_id,
-      siblings: this.collection }
+      siblings: siblings }
   },
 
   focusOnTextArea: function(el) {
