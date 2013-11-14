@@ -5,7 +5,6 @@ DeepThought.Views.nodeView = Backbone.Marionette.CollectionView.extend({
   id: "ul1",
   initialize: function() {
     this.root_id = this.options.root_id;
-    console.log(this.collection);
     DeepThought.collections[this.root_id] = this.collection;
   },
 
@@ -14,10 +13,9 @@ DeepThought.Views.nodeView = Backbone.Marionette.CollectionView.extend({
   onRender: function() {
     var that = this;
     setTimeout(function() {
-      if (that.el.firstChild.tagName === "LI" && $(":focus").length === 0) {
-        that.focusOnTextArea(that.el.firstChild);
-      }
-  
+      // if ($(":focus").length === 0) {
+      //    that.focusOnTextArea(that.el.firstChild);
+      //  }
       var headerShow = new DeepThought.Views.headerView({
         model: DeepThought.rootCollection.get(that.root_id)
       });
@@ -37,5 +35,16 @@ DeepThought.Views.nodeView = Backbone.Marionette.CollectionView.extend({
 
   focusOnTextArea: function(el) {
     el.firstElementChild.getElementsByTagName("textarea")[0].focus();
+  },
+
+  appendHtml: function(collectionView, itemView, index){
+    var $container = collectionView.itemViewContainer ? collectionView.$(collectionView.itemViewContainer) : collectionView.$el;
+    console.log("tappin it");
+    if (index === 0){
+      $container.prepend(itemView.el);
+    } else {
+      $container.children().eq(index - 1).after(itemView.el);
+    }
   }
+
 });

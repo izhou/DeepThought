@@ -1,5 +1,5 @@
 <% var model_id = model.get('id')%>
-<form id="form<%=model_id%>">
+<form id="form<%=model_id%>" class="inline entry_form">
 
   <input type="button" class="uk-button-link view-toggle" 
     id="button<%=model_id%>" 
@@ -11,5 +11,7 @@
    <textarea class="uk-form-blank" id ="ta<%=model_id%>"
     name="entry[title]"><%=model.get('title')%></textarea>
 </form>
-
-<ul id="ul<%=model_id%>"></ul>
+<div id="arrow<%=model_id%>" class="draggable inline">⬍</div>
+<ul id="ul<%=model_id%>">
+<div class="hr"><hr></hr></div>
+</ul>

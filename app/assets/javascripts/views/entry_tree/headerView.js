@@ -21,7 +21,7 @@ DeepThought.Views.headerView = Backbone.View.extend({
 
   zoomOut: function(event) {
     event.preventDefault();
-    if (event.which === 37 && event.shiftKey && event.ctrlKey){
+    if (event.which === 37 && event.ctrlKey){
       DeepThought.router.navigate('#/entries/'+this.model.get("parent_id"), 
         {wait: true, success: function() {
           Backbone.history.stop();

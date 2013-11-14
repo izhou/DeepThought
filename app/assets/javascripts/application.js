@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.serializeJSON.min
+//= require jquery-ui-1.10.3.custom.min
 //= require uikit
 //= require underscore
 //= require backbone

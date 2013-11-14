@@ -7,8 +7,8 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
  
 home = Entry.create(title: 'Home', rank:0)
-child1 = home.children.create title:'child1', rank:1
-child2 = home.children.create title:'child2', rank:2
+# child1 = home.children.create title:'Welcome to DeepThought.', rank:1
+# child2 = home.children.create title:'child2', rank:2
 # grandchild11 = child1.children.create title:'grandchild11', rank:1.5
 # grandchild12 = child1.children.create title:'grandchild12', rank:2.5
 # grandchild21 = child2.children.create title:'grandchild21', rank:3

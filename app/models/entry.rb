@@ -1,5 +1,7 @@
 class Entry < ActiveRecord::Base
   attr_accessible :title, :ancestry, :parent_id, :expanded, :rank
+  #validates :title, :rank, presence: true
+  # validates :title, :expanded, :rank, presence: true
   has_ancestry
 
   def as_json(options = {})
