@@ -19,15 +19,15 @@ DeepThought.Views.headerView = Backbone.View.extend({
     }
   },
 
-  zoomOut: function(event) {
-    event.preventDefault();
-    if (event.which === 37 && event.ctrlKey){
-      DeepThought.router.navigate('#/entries/'+this.model.get("parent_id"), 
-        {wait: true, success: function() {
-          Backbone.history.stop();
-          Backbone.history.start();
-        }}
-      );
+  zoomOut:function(event) {  
+    var grandparent_id = this.findGrandparent(this.model);
+    if(grandparent_id) {
+      var entryShow = new DeepThought.Views.nodeView({
+        collection: DeepThought.collections[grandparent_id],
+        itemView: DeepThought.Views.treeView,
+        root_id: grandparent_id
+      });
+    $("#content").html(entryShow.render().$el);
     }
   },
 
@@ -36,10 +36,7 @@ DeepThought.Views.headerView = Backbone.View.extend({
     DeepThought.rootCollection.create({
       title:"",
       parent_id: this.model.id
-    }, {wait: true, success: function() {
-      Backbone.history.stop();
-      Backbone.history.start();
-    }});
+    }, {wait: true});
   },
 
   goDown: function(event) {
@@ -65,6 +62,11 @@ DeepThought.Views.headerView = Backbone.View.extend({
 
   focusOnTextArea: function(el) {
     el.firstElementChild.getElementsByTagName("textarea")[0].focus();
+  },
+
+  findGrandparent: function(model) {
+    var parent_id = DeepThought.parents[model.get("id")];
+    return DeepThought.parents[parent_id];
   },
 
 })

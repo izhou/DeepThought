@@ -1,6 +1,7 @@
 
 DeepThought.Views.nodeView = Backbone.Marionette.CollectionView.extend({
   //itemView: DeepThought.Views.treeView,
+  
   tagName: "ul",
   id: "ul1",
   initialize: function() {
@@ -8,30 +9,33 @@ DeepThought.Views.nodeView = Backbone.Marionette.CollectionView.extend({
     DeepThought.collections[this.root_id] = this.collection;
   },
 
-  emptyView: DeepThought.Views.childlessView,
-
   onRender: function() {
     var that = this;
     setTimeout(function() {
-      // if ($(":focus").length === 0) {
-      //    that.focusOnTextArea(that.el.firstChild);
-      //  }
       var headerShow = new DeepThought.Views.headerView({
         model: DeepThought.rootCollection.get(that.root_id)
       });
       $("#content").prepend(headerShow.render().$el);
+
       if ($(":focus").length === 0) {
-        $("#ta"+that.root_id).focus();
-      }
+         var children = DeepThought.collections[that.root_id].models;
+         if (children.length !== 0 ){
+          $("#ta"+_.first(children).get("id")).focus();
+         } else {
+          console.log($("#ta"+that.root_id));
+          $("#ta"+that.root_id).focus();
+         }
+       }
     }, 0);
   },
 
   itemViewOptions: function(){
-    var siblings = new Object();
-    siblings[this.root_id] = this.collection;
-    return { root_id: this.root_id,
-      siblings: siblings }
+    var root_id = this.options.root_id;
+    return {root_id: root_id}
+    
   },
+
+  emptyView: DeepThought.Views.childlessView,
 
   focusOnTextArea: function(el) {
     el.firstElementChild.getElementsByTagName("textarea")[0].focus();
@@ -39,7 +43,6 @@ DeepThought.Views.nodeView = Backbone.Marionette.CollectionView.extend({
 
   appendHtml: function(collectionView, itemView, index){
     var $container = collectionView.itemViewContainer ? collectionView.$(collectionView.itemViewContainer) : collectionView.$el;
-    console.log("tappin it");
     if (index === 0){
       $container.prepend(itemView.el);
     } else {

@@ -4,12 +4,35 @@
     width:250px;
 }
 
-ul {
+li {
   list-style-type: none;
+}
+
+.child {
+  padding-bottom: 5px;
+  border-left: 1px dotted lightGray;
 }
 
 .uk-navbar {
   background: black
+}
+
+.bullet {
+  text-align:center;
+}
+
+.bullet:hover {
+  text-shadow: 2px 2px 5px gray, 
+    -2px -2px 5px gray, 
+    -2px 2px 5px gray, 
+    2px -2px 5px gray;
+}
+
+.bullet-shadow {
+  text-shadow: 2px 2px 3px #70a9d9, 
+  -2px -2px 3px #70a9d9, 
+  -2px 2px 3px #70a9d9, 
+  2px -2px 3px #70a9d9;
 }
 
 label { 
@@ -21,11 +44,17 @@ label {
 .view-toggle {
   opacity: 0;
   text-decoration: none;
+  font-weight: bold;
+  width: 15px;
 }
 
 .uk-panel-box {
-  min-height: 800px;
+  border-radius:10px !important;
+  min-height: 1200px;
   margin: 20px;
+}
+.container {
+  margin: 50px;
 }
 
 html {
@@ -33,7 +62,7 @@ html {
 }
 
 #content { 
-margin: 35px;}
+  margin: 35px;}
 
 #ul1 {
   padding: 0px;
@@ -53,24 +82,33 @@ textarea {
   resize:none;
 }
 
-#stars {
+/*#footer {
+  position: absolute;
+  bottom: 0;
   width:100%;
+  height:60px;
   color:gray;
-  background-color: gray
-}
-
-.hr {
-  height:5px;
   background-color: gray;
-  opacity:0;
+  z-index: 2;
+}
+*/
+.hr {
+  height:1px;
+  background-color: gray;
+  opacity:0.5;
 }
 
 .drop-hover {
   background-color: white;
-  .hr {
-    opacity:100 !important;
-  }
+}
 
+.drop-hover .hr {
+  opacity:1 !important;
+}
+
+.uk-search {
+  border: 1px solid lightGray;
+  border-radius: 15px;
 }
 
 .draggedList {
@@ -84,7 +122,6 @@ textarea {
 .drag-hover {
   background-color: white;
 }*/
-
 .draggable{
   font-size: 150%;
   display: inline-block;
@@ -92,3 +129,29 @@ textarea {
   color: gray;
   z-index: 10;
 }
+.keyboard{
+  size:300%;
+  font-weight: bold;
+  box-shadow: 10px 10px 5px black;
+}
+#keyboard-shortcuts{
+  position:absolute;
+  bottom:0px;
+  left:0px;
+  z-index: 3;
+}
+
+/* Reset body padding and margins */
+body { margin:0; padding:0; }
+ 
+/* Make Header Sticky */
+#header_container { background:#eee; border:1px solid #666; left:0; position:fixed; width:100%; top:0; }
+/*#header{ line-height:60px; margin:0 auto; width:940px; text-align:center; }*/
+ 
+/* CSS for the content of page. I am giving top and bottom padding of 80px to make sure the header and footer do not overlap the content.*/
+#container { margin:0 auto; overflow:auto; padding:0px 0; width:940px; }
+#content{}
+ 
+/* Make Footer Sticky */
+#footer_container {bottom:0; height:60px; left:0; position:fixed; width:100%; }
+/*#footer { line-height:60px; margin:0 auto; width:940px; text-align:center; }*/

@@ -16,12 +16,10 @@
 <ul id="ul0">
   <li id="<%model_id%>">
     <form id="form<%=model_id%>">
-       <textarea class="uk-form-blank" id ="ta<%=model_id%>"
+       <textarea class="uk-form-blank entry-title" id ="ta<%=model_id%>"
         name="entry[title]"><%=model.get('title')%></textarea>
     </form>
   </li>
 </ul>
 </h1>
-<%} else {%>
-  <br>
-<%}%>
+<%} %>

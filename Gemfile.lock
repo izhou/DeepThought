@@ -61,6 +61,8 @@ GEM
     ejs (1.1.1)
     erubis (2.7.0)
     execjs (2.0.2)
+    font-awesome-rails (4.0.3.0)
+      railties (>= 3.2, < 5.0)
     hike (1.2.3)
     i18n (0.6.5)
     journey (1.0.4)
@@ -135,6 +137,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   devise
   ejs
+  font-awesome-rails
   jquery-rails
   pg
   rails (= 3.2.14)

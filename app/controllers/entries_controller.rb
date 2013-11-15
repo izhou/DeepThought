@@ -1,5 +1,5 @@
 class EntriesController < ApplicationController
-  respond_to :json
+  respond_to :json, :html
 
   def index
     @roots = Entry.all
@@ -18,8 +18,7 @@ class EntriesController < ApplicationController
   end
 
   def create
-    @entry = Entry.new(params[:entry])
-    @entry.save
+    @entry = Entry.create!(params[:entry])
     render json: @entry
   end
 

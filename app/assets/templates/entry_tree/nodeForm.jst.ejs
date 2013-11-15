@@ -5,13 +5,16 @@
     id="button<%=model_id%>" 
     value="<%= model.get("expanded") ? '-' : '+' %>">
 
-  <label for "<%=model.get('title')%>">
-    <a href="#/entries/<%=model_id%>">●</a>
+  <label class="bullet" for "<%=model.get('title')%>"
+    id="bullet<%=model_id%>">
+    <a href="#/entries/<%=model_id%>"> ●</a>
   </label>
-   <textarea class="uk-form-blank" id ="ta<%=model_id%>"
+
+   <textarea class="uk-form-blank entry-title" id ="ta<%=model_id%>"
     name="entry[title]"><%=model.get('title')%></textarea>
 </form>
 <div id="arrow<%=model_id%>" class="draggable inline">⬍</div>
-<ul id="ul<%=model_id%>">
+<ul id="ul<%=model_id%>"class="uk-animation-reverse-fade droppable">
 <div class="hr"><hr></hr></div>
 </ul>
+<div class="hr"><hr></hr></div>
