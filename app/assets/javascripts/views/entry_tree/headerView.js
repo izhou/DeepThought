@@ -2,6 +2,7 @@ DeepThought.Views.headerView = Backbone.View.extend({
   template: JST['entry_tree/header'],  
 
   events: {
+    "click .star" : "starEntry",
     "change" : "saveEntry",
     "keydown :input" : "keyHandler"
   },
@@ -17,6 +18,21 @@ DeepThought.Views.headerView = Backbone.View.extend({
       case 40: //down arrow
         this.goDown(event);
     }
+  },
+
+  starEntry: function(){
+    console.log("starrr!")
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (this.model.get("starred")) {
+      this.model.save({"starred": false});
+      this.render();
+    } else {
+      this.model.save({"starred": true});
+      this.render();
+    }
+
   },
 
   zoomOut:function(event) {  

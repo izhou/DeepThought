@@ -5,9 +5,8 @@
     id="button<%=model_id%>" 
     value="<%= model.get("expanded") ? '-' : '+' %>">
 
-  <label class="bullet" for "<%=model.get('title')%>"
-    id="bullet<%=model_id%>">
-    <a href="#/entries/<%=model_id%>"> ●</a>
+  <label for "<%=model.get('title')%>" class="bullet" id ="bullet<%=model_id%>">
+    <a href="#/entries/<%=model_id%>">●</a>
   </label>
 
    <textarea class="uk-form-blank entry-title" id ="ta<%=model_id%>"

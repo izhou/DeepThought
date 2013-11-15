@@ -14,7 +14,8 @@ li {
 }
 
 .uk-navbar {
-  background: black
+  background: black;
+  z-index: 100 !important;
 }
 
 .bullet {
@@ -25,14 +26,14 @@ li {
   text-shadow: 2px 2px 5px gray, 
     -2px -2px 5px gray, 
     -2px 2px 5px gray, 
-    2px -2px 5px gray;
+    2px -2px 5px gray !important;
 }
 
 .bullet-shadow {
   text-shadow: 2px 2px 3px #70a9d9, 
   -2px -2px 3px #70a9d9, 
   -2px 2px 3px #70a9d9, 
-  2px -2px 3px #70a9d9;
+  2px -2px 3px #70a9d9 !important;
 }
 
 label { 
@@ -49,9 +50,11 @@ label {
 }
 
 .uk-panel-box {
+  position: relative;
   border-radius:10px !important;
   min-height: 1200px;
   margin: 20px;
+  z-index: 0;
 }
 .container {
   margin: 50px;
@@ -61,12 +64,21 @@ html {
   height: 150%;
 }
 
-#content { 
-  margin: 35px;}
+#content {
+  margin: 35px;
+}
+
+.star {
+  position: absolute;
+  top: 30px;
+  right:30px;
+}
 
 #ul1 {
   padding: 0px;
 }
+
+
 
 .entry_form {
   display: inline-block;
@@ -95,7 +107,7 @@ textarea {
 .hr {
   height:1px;
   background-color: gray;
-  opacity:0.5;
+  opacity:0.1;
 }
 
 .drop-hover {
@@ -128,7 +140,15 @@ textarea {
   float: right;
   color: gray;
   z-index: 10;
+  opacity: 0;
 }
+
+#star-container {
+  overflow: auto;
+  height:200px;
+  color:gray;
+}
+
 .keyboard{
   size:300%;
   font-weight: bold;
@@ -141,11 +161,22 @@ textarea {
   z-index: 3;
 }
 
+.uk-grid {
+  position:fixed;
+  left:0;
+  bottom:0;
+  width:100%;
+  margin:0px;
+  height: 2000px;
+  background-color: gray;
+  z-index: 20;
+}
+
 /* Reset body padding and margins */
 body { margin:0; padding:0; }
  
 /* Make Header Sticky */
-#header_container { background:#eee; border:1px solid #666; left:0; position:fixed; width:100%; top:0; }
+#header_container { background:#eee; border:1px solid #666; left:0; position:fixed; width:100%; top:0; z-index:10; }
 /*#header{ line-height:60px; margin:0 auto; width:940px; text-align:center; }*/
  
 /* CSS for the content of page. I am giving top and bottom padding of 80px to make sure the header and footer do not overlap the content.*/
