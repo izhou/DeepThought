@@ -5,7 +5,6 @@ class Entry < ActiveRecord::Base
   #validates :title, :rank, presence: true
   #validates :title, :expanded, :rank, :starred, :completed, presence: true
   
-
   def as_json(options = {})
     attr_hash = self.attributes.to_hash
     attr_hash[:parent_id] = self.parent_id 

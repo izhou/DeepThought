@@ -7,7 +7,20 @@ window.DeepThought = {
     DeepThought.rootCollection = new DeepThought.Collections.EntryTree();
     DeepThought.rootCollection.fetch({
       success: function(data) {
+        DeepThought.allCollections = new Object();
+        DeepThought.rootCollection.models.forEach(function(model) {
+          var children = DeepThought.rootCollection.where({"parent_id": model.get("id")});
+          var childrenColl = new DeepThought.Collections.EntryTree(children);
+          DeepThought.allCollections[model.get("id")] = childrenColl;
+        })
+
+        DeepThought.allParents = new Object();
+        DeepThought.rootCollection.models.forEach(function(model) {
+          DeepThought.allParents[model.get("id")] = DeepThought.rootCollection.findWhere({"id" : model.get("parent_id")});
+        })
+
         DeepThought.router = new DeepThought.Router(data);
+        console.log("routergoo");
         Backbone.history.start();
       }
     })

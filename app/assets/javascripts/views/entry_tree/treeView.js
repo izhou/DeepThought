@@ -31,7 +31,6 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
     }
   },
 
-
   appendHtml: function(collectionView,itemView) {
     var itemIndex = DeepThought.collections[itemView.model.get("parent_id")].models.indexOf(itemView.model);
     var prevItem = DeepThought.collections[itemView.model.get("parent_id")].models[itemIndex - 1]
@@ -47,7 +46,6 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
   },
 
   events: {
-  //  "click .bullet":"changeRoot",
     "change": "saveEntry",
     "click .view-toggle" : "toggleView",
     "mouseover" : "displayButtons",
@@ -92,7 +90,6 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
   },
 
   keyHandler:function() {
-    event.stopPropagation();
     switch(event.which) {
       case 13: //enter key
         if (event.shiftKey) {
@@ -148,6 +145,12 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
 
   completeEntry: function() {
     event.stopPropagation();
+    event.preventDefault();
+    console.log("here");
+    $("#"+this.model.id).toggleClass("completed");
+    this.model.save({"completed" : true}, {success: function(){
+      this.render();      
+    }})
 
   },
 
@@ -166,20 +169,16 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
   toggleView: function(){
     event.preventDefault();
     event.stopPropagation();
-    console.log(this.model);
-    $("#ul"+this.model.get("id")).slideToggle(300);
-    var button = document.getElementById("button"+this.model.get("id"))
-    console.log("here");
-    if (this.model.get("expanded")) {
-      $("#bullet"+this.model.get("id")).addClass("bullet-shadow");
-      this.model.set("expanded", false);
-      button.value="+";
-    } else {
-      $("#bullet"+this.model.get("id")).removeClass("bullet-shadow");
-      this.model.set("expanded", true);
-      button.value="-";
-    }
-    this.model.save();
+    var that = this;
+
+    this.model.save({"expanded" : !this.model.get("expanded")},
+      {success: function(){ 
+        $("#bullet"+ that.model.get("id")).toggleClass("bullet-shadow");
+        var button = $("#button"+that.model.get("id"));
+        button.attr("value", (button[0].value === '+' ? '-' : '+'));
+        $("#ul"+that.model.get("id")).slideToggle(300);
+      }
+    })
   },
 
   changeRoot: function(id) {
@@ -191,8 +190,6 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
     });
     $("#content").html(entryShow.render().$el);
   },
-
-
 
   zoomIn:function(event) {
     var that = this;
@@ -280,11 +277,11 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
       this.model.save({parent_id: previousSibling.get("id"), rank:newRank}, {success: function(){
         DeepThought.collections[old_parent_id].remove(that.model);
         if (previousSibling.get("expanded") === false){        
-          previousSibling.save({"expanded":true});
-          $("#ul"+previousSibling.get("id")).slideToggle(300);
-          $("#bullet"+previousSibling.get("id")).removeClass("bullet-shadow");
-          $("#bullet"+previousSibling.get("id")).value = '-';
-
+          previousSibling.save({"expanded":true},{success: function() {
+            $("#ul"+previousSibling.get("id")).slideToggle(300);
+            $("#bullet"+previousSibling.get("id")).removeClass("bullet-shadow");
+            $("#button"+previousSibling.get("id")).value = '-';
+          }});
         }
         DeepThought.collections[previousSibling.get("id")].add(that.model, {wait: true});
         DeepThought.parents[that.model.get("id")] = previousSibling.get("id");

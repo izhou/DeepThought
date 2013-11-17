@@ -4,6 +4,10 @@
     width:250px;
 }
 
+.completed {
+  text-decoration: line-through !important;
+}
+
 li {
   list-style-type: none;
 }
