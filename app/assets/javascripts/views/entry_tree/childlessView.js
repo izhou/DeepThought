@@ -7,13 +7,13 @@ DeepThought.Views.childlessView = Backbone.Marionette.ItemView.extend({
 
   initialize: function() {
     this.root_id = parseInt(this.options.root_id);
-    console.log("here");
-    this.model = DeepThought.collections[this.root_id];
+    //console.log("here");
+    //this.model = DeepThought.allCollections[this.root_id];
   },
 
   makeNewTask: function(){
     var that = this;
-    DeepThought.collections[this.root_id].create({
+    DeepThought.allCollections[this.root_id].create({
       title:"",
       parent_id: this.root_id,
       rank: 1

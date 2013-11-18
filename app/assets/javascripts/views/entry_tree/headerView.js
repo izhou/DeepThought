@@ -35,13 +35,16 @@ DeepThought.Views.headerView = Backbone.View.extend({
 
   },
 
-  zoomOut:function(event) {  
-    var grandparent_id = this.findGrandparent(this.model);
-    if(grandparent_id) {
+  zoomOut:function(event) {
+    event.preventDefault();
+    console.log("boooooo");
+    var parent_id = this.model.get("parent_id");
+//    var grandparent_id = this.findGrandparent(this.model);
+    if(parent_id) {
       var entryShow = new DeepThought.Views.nodeView({
-        collection: DeepThought.collections[grandparent_id],
+        collection: DeepThought.allCollections[parent_id],
         itemView: DeepThought.Views.treeView,
-        root_id: grandparent_id
+        root_id: parent_id
       });
     $("#content").html(entryShow.render().$el);
     }
@@ -81,8 +84,8 @@ DeepThought.Views.headerView = Backbone.View.extend({
   },
 
   findGrandparent: function(model) {
-    var parent_id = DeepThought.parents[model.get("id")];
-    return DeepThought.parents[parent_id];
+    var parent_id = DeepThought.allParents[model.get("id")];
+    return DeepThought.allParents[parent_id];
   },
 
 })

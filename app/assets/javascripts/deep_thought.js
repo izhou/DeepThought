@@ -16,7 +16,7 @@ window.DeepThought = {
 
         DeepThought.allParents = new Object();
         DeepThought.rootCollection.models.forEach(function(model) {
-          DeepThought.allParents[model.get("id")] = DeepThought.rootCollection.findWhere({"id" : model.get("parent_id")});
+          DeepThought.allParents[model.get("id")] = model.get("parent_id");
         })
 
         DeepThought.router = new DeepThought.Router(data);

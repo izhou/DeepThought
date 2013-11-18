@@ -12,12 +12,8 @@ DeepThought.Router = Backbone.Router.extend({
   },
 
   nodeShow: function(id){
-    var node = DeepThought.rootCollection.get(id);
-    DeepThought.collections = DeepThought.collections || new Object();
-    DeepThought.parents = DeepThought.parents || new Object();
-    var children = DeepThought.rootCollection.where({parent_id : parseInt(id)});
     var nodeShow = new DeepThought.Views.nodeView({
-      collection: new DeepThought.Collections.EntryTree(children),
+      collection: DeepThought.allCollections[id],
       itemView: DeepThought.Views.treeView,
       root_id: id
     });
