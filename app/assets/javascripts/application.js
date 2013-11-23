@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require jquery.serializeJSON.min
 //= require jquery-ui-1.10.3.custom.min
+//= require jquery.autogrow-textarea
 //= require uikit
 //= require underscore
 //= require backbone

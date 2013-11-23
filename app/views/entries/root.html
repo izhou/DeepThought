@@ -110,24 +110,5 @@
 $(document).ready(function(){
   window.DeepThought.initialize();
 }); 
-// $(window).click(function() {
-//   setTimeout(function() {
-//     if ($(".star-container").is(":hidden") === false) {
-//       console.log("wtf");
-//       $(".star-container").toggle();
-//     }    
-//   },0)
-// })
-
-$("#showStars").click(function() {
-  $(".star-container").show();
-  setTimeout(function() {
-    $(window).one("click",function() {
-      $(".star-container").hide();
-    });
-  },10);
-});
-
-
 
 </script>

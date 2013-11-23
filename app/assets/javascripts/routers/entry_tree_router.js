@@ -29,6 +29,8 @@ DeepThought.Router = Backbone.Router.extend({
         $( ".draggable" ).draggable({axis: "y", revert:true, zIndex:100});
         $( ".droppable" ).droppable({hoverClass:"drop-hover", greedy:true, tolerance: "intersect"});
       });
+
+        $('textarea').autogrow();
     } else {
       $("#content").html("<div style='color:red'>You do not belong here! Go back.</div>")
     }

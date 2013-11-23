@@ -1,5 +1,5 @@
 <div class="header">
-<%if (model.get("ancestry")) {%>
+<%if (model.get("parent_id") !== null) {%>
   <ul class="uk-breadcrumb">
     <%var ancestry = model.get("ancestry").split("/")%>
     <%ancestry.forEach(function(id){%>
@@ -29,4 +29,4 @@
   <button class="uk-button-link star" id="star<%=model_id%>">
   <%=model.get("starred") ? "<i class='fa fa-star'></i>" : "<i class='fa fa-star-o'></i>" %>
   </button> 
-  </div>
+</div>
