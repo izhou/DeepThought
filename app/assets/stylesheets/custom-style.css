@@ -86,7 +86,9 @@ html {
 
 .entry_form {
   display: inline-block;
-  width: 90%;
+  width: 95%;
+  margin-top: 5px;
+
 }
 
 .uk-form-blank {
@@ -200,7 +202,7 @@ textarea {
 body { margin:0; padding:0; }
  
 /* Make Header Sticky */
-#header_container { background:#eee; border:1px solid #666; left:0; position:fixed; width:100%; top:0; z-index:10; }
+#header{ background:#eee; border:1px solid #666; left:0; position:fixed; width:100%; top:0; z-index:10; }
 /*#header{ line-height:60px; margin:0 auto; width:940px; text-align:center; }*/
  
 /* CSS for the content of page. I am giving top and bottom padding of 80px to make sure the header and footer do not overlap the content.*/
@@ -208,5 +210,5 @@ body { margin:0; padding:0; }
 #content{}
  
 /* Make Footer Sticky */
-#footer_container {bottom:0; height:60px; left:0; position:fixed; width:100%; }
+#footer {bottom:0; height:60px; left:0; position:fixed; width:100%; }
 /*#footer { line-height:60px; margin:0 auto; width:940px; text-align:center; }*/

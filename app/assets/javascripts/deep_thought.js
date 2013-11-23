@@ -26,7 +26,7 @@ window.DeepThought = {
           itemView: DeepThought.Views.starView
         });
 
-        $("#footer_container").append(starShow.render().$el);
+        $("#footer").append(starShow.render().$el);
         $(".star-container").hide();
 
         $("#showStars").click(function() {

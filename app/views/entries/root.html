@@ -4,36 +4,34 @@
     <title>Starter template</title>
   </head>
   <body>
-    <div id="header_container">
-        <div id="header">
-          <nav class="uk-navbar">
-            <div class="uk-container uk-container-center">
-              <a href="#" class="uk-navbar-brand">DeepThought</a>
-              
-              <div class="uk-navbar-content search">
-                <form class="uk-search" data-uk-search="{source:'my-results.json'}">
-                  <input class="uk-search-field" type="search" placeholder="Search...">
-                  <button class="uk-search-close" type="reset"></button>
-                </form>
-              </div>
-              <a id="showStars" class="uk-navbar-content"><i class='fa fa-star'></i></a>
+    <div id="header">
+      <nav class="uk-navbar">
+        <div class="uk-container uk-container-center">
+          <a href="#" class="uk-navbar-brand">DeepThought</a>
+          
+          <div class="uk-navbar-content search">
+            <form class="uk-search">
+              <input class="uk-search-field" type="search" placeholder="Search...">
+              <button class="uk-search-close" type="reset"></button>
+            </form>
+          </div>
+          <a id="showStars" class="uk-navbar-content"><i class='fa fa-star'></i></a>
 
-              <div class="uk-navbar-flip">
-              <ul class="uk-navbar-nav uk-hidden-small uk-navbar-attached">
-                
-                <li class="uk-active"><a href="">Home</a></li>
-                <li><a href="#/contact">About</a></li>
-                <%unless (current_user.nil?)%>
-                  <li><a> <%=current_user.email%></a></li>
-                  <li><a href="/users/sign_out" data-method="delete">Logout</a></li>
-                <%else%>
-                  <li><a href="/users/sign_in">Login</a></li>
-                <%end%>
-              </ul>
-              </div>
-            </div>
-          </nav>
+          <div class="uk-navbar-flip">
+          <ul class="uk-navbar-nav uk-hidden-small uk-navbar-attached">
+            
+            <li class="uk-active"><a href="">Home</a></li>
+            <li><a href="#/contact">About</a></li>
+            <%unless (current_user.nil?)%>
+              <li><a> <%=current_user.email%></a></li>
+              <li><a href="/users/sign_out" data-method="delete">Logout</a></li>
+            <%else%>
+              <li><a href="/users/sign_in">Login</a></li>
+            <%end%>
+          </ul>
+          </div>
         </div>
+      </nav>
     </div>
     <br>
     <div id="container">
@@ -50,7 +48,7 @@
 
   </body>
   
-  <div id="footer_container">
+  <div id="footer">
     <div id="keyboard-shortcuts">
       <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click', justify:'#keyboard-shortcuts'}">
         <button class="uk-button-large" type="submit">Keyboard Shortcuts &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="uk-icon-caret-up"></i>
