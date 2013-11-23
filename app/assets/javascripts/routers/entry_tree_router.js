@@ -25,6 +25,11 @@ DeepThought.Router = Backbone.Router.extend({
       var render = nodeShow.render();
       $("#content").html(render.$el);
 
+      var headerShow = new DeepThought.Views.headerView({
+        model: DeepThought.rootCollection.get(id)
+      });
+      $("#content").prepend(headerShow.render().$el);
+
       $(function() {
         $( ".draggable" ).draggable({axis: "y", revert:true, zIndex:100});
         $( ".droppable" ).droppable({hoverClass:"drop-hover", greedy:true, tolerance: "intersect"});
