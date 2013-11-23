@@ -1,7 +1,9 @@
 class Entry < ActiveRecord::Base
-  attr_accessible :title, :ancestry, :parent_id, :expanded, :rank, :starred, :completed
-  validates_presence_of :rank
+  attr_accessible :title, :ancestry, :parent_id, :expanded, :rank, :starred, :completed, :user_id
+  validates_presence_of :rank, :user_id
   has_ancestry
+
+  belongs_to :owner, class_name: "user", foreign_key: "user_id"
   #validates :title, :rank, presence: true
   #validates :title, :expanded, :rank, :starred, :completed, presence: true
   

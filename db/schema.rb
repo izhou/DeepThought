@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131115032152) do
+ActiveRecord::Schema.define(:version => 20131120005721) do
 
   create_table "entries", :force => true do |t|
     t.string   "title"
@@ -22,9 +22,11 @@ ActiveRecord::Schema.define(:version => 20131115032152) do
     t.float    "rank"
     t.boolean  "starred",    :default => false
     t.boolean  "completed",  :default => false
+    t.integer  "user_id"
   end
 
   add_index "entries", ["ancestry"], :name => "index_entries_on_ancestry"
+  add_index "entries", ["user_id"], :name => "index_entries_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

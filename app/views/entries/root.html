@@ -16,12 +16,19 @@
                   <button class="uk-search-close" type="reset"></button>
                 </form>
               </div>
+              <a id="showStars" class="uk-navbar-content"><i class='fa fa-star'></i></a>
 
               <div class="uk-navbar-flip">
               <ul class="uk-navbar-nav uk-hidden-small uk-navbar-attached">
-                <li><a href="#/star"><i class='fa fa-star'></i></a></li>
+                
                 <li class="uk-active"><a href="">Home</a></li>
                 <li><a href="#/contact">About</a></li>
+                <%unless (current_user.nil?)%>
+                  <li><a> <%=current_user.email%></a></li>
+                  <li><a href="/users/sign_out" data-method="delete">Logout</a></li>
+                <%else%>
+                  <li><a href="/users/sign_in">Login</a></li>
+                <%end%>
               </ul>
               </div>
             </div>
@@ -31,42 +38,68 @@
     <br>
     <div id="container">
       <div class="uk-container uk-container-center">
-        <div class="uk-panel-box">
+        <div class="uk-panel-box page">
           <div id='content'>
+            <p class="notice" style="color:green"><%= notice %></p>
+            <p class="alert" style="color:red"><%= alert %></p>
             Patience.....DeepThought is calculating....
           </div>
         </div>
       </div>
     </div>
-    <!-- <div class="uk-grid star-container" id="star-container">
-      <div class="uk-width-1-1">
-        <div class="uk-width-medium-1-6">
-          <div class="uk-panel"></div>
-        </div>
-      </div>
-    </div> -->
 
   </body>
   
   <div id="footer_container">
-
     <div id="keyboard-shortcuts">
-      <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click'}">
-        <button class="uk-button-large" type="submit">Keyboard Shortcuts <i class="uk-icon-caret-up"></i>
+      <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click', justify:'#keyboard-shortcuts'}">
+        <button class="uk-button-large" type="submit">Keyboard Shortcuts &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="uk-icon-caret-up"></i>
         </button>
-        <div class="uk-dropdown uk-dropdown-up uk-dropdown-width-2">
-          <dl class="uk-description-list uk-description-list-horizontal">
-            <dt>Tab in</dt><dd>Tab</dd>
-            <dt>Tab out</dt><dd>⇧ + Tab</dd>
-            <dt>Expand/collapse</dt><dd>⌘ + Ctrl + Space</dd>
-            <dt>Move Up</dt><dd>⌘ + Ctrl + ↑</dd>
-            <dt>Move Down</dt><dd>⌘ + Ctrl + ↓</dd>
-            <dt>Move in</dt><dd>⌘ + Ctrl + →</dd>
-            <dt>Move out</dt><dd>⌘ + Ctrl + ←</dd>
-            <dt>Delete</dt><dd>⇧ + Backspace</dd>
-            <dt>Zoom in</dt><dd>⇧ + →</dd>
-            <dt>Zoom out</dt><dd>⇧ + ←</dd>
-          </dl>
+        <div class="uk-dropdown uk-dropdown-small uk-dropdown-up uk-dropdown-width-1">
+          <table class="uk-table">
+             <tbody>
+                <tr>
+                  <th>Tab in</th>
+                  <td>Tab</td>
+                </tr>
+                <tr>
+                  <th>Tab out</th>
+                  <td>⇧ + Tab</td>
+                </tr>
+                <tr>
+                  <th>Expand/<br>collapse</th>
+                  <td>⌘ + Ctrl + Space</td>
+                </tr><br>
+                <tr>
+                  <th>Move up</th>
+                  <td>⌘ + Ctrl + ↑</td>
+                </tr>
+                <tr>
+                  <th>Move down</th>
+                  <td>⌘ + Ctrl + ↓</td>
+                </tr>
+                <tr>
+                  <th>Move in</th>
+                  <td>⌘ + Ctrl + →</td>
+                </tr>
+                <tr>
+                  <th>Move out</th>
+                  <td>⌘ + Ctrl + ←</td>
+                </tr>
+                <tr>
+                  <th>Delete</th>
+                  <td>⇧ + Backspace</td>
+                </tr>
+                <tr>
+                  <th>Zoom in</th>
+                  <td>⇧ + →</td>
+                </tr>
+                <tr>
+                  <th>Zoom out</th>
+                  <td>⇧ + ←</td>
+                </tr>
+             </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -77,4 +110,24 @@
 $(document).ready(function(){
   window.DeepThought.initialize();
 }); 
+// $(window).click(function() {
+//   setTimeout(function() {
+//     if ($(".star-container").is(":hidden") === false) {
+//       console.log("wtf");
+//       $(".star-container").toggle();
+//     }    
+//   },0)
+// })
+
+$("#showStars").click(function() {
+  $(".star-container").show();
+  setTimeout(function() {
+    $(window).one("click",function() {
+      $(".star-container").hide();
+    });
+  },10);
+});
+
+
+
 </script>

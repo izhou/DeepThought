@@ -1,5 +1,5 @@
 <div class="header">
-<%if(model.get("id")!== 1) {%>
+<%if (model.get("ancestry")) {%>
   <ul class="uk-breadcrumb">
     <%var ancestry = model.get("ancestry").split("/")%>
     <%ancestry.forEach(function(id){%>

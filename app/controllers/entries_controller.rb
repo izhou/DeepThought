@@ -2,13 +2,17 @@ class EntriesController < ApplicationController
   respond_to :json, :html
 
   def index
-    @roots = Entry.all
+    @roots = Entry.where('user_id = ?', current_user.id)
     render json: @roots
   end
 
   def show
     @entry = Entry.find(params[:id])
-    render json: @entry
+    if @entry[:user_id] == current_user.id
+      render json: @entry
+    else
+      render json:"Access Denied"
+    end
   end
 
   def update
@@ -18,7 +22,9 @@ class EntriesController < ApplicationController
   end
 
   def create
-    @entry = Entry.create!(params[:entry])
+    @entry = Entry.new(params[:entry])
+    @entry[:user_id] = current_user.id
+    @entry.save!()
     render json: @entry
   end
 

@@ -34,10 +34,10 @@ li {
 }
 
 .bullet-shadow {
-  text-shadow: 2px 2px 3px #70a9d9, 
-  -2px -2px 3px #70a9d9, 
-  -2px 2px 3px #70a9d9, 
-  2px -2px 3px #70a9d9 !important;
+  text-shadow: 2px 2px 5px #70a9d9, 
+  -2px -2px 5px #70a9d9, 
+  -2px 2px 5px #70a9d9, 
+  2px -2px 5px #70a9d9 !important;
 }
 
 label { 
@@ -53,7 +53,7 @@ label {
   width: 15px;
 }
 
-.uk-panel-box {
+.page {
   position: relative;
   border-radius:10px !important;
   min-height: 1200px;
@@ -147,10 +147,29 @@ textarea {
   opacity: 0;
 }
 
-#star-container {
-  overflow: auto;
-  height:200px;
-  color:gray;
+.star-container {
+  position: fixed;
+  left:0;
+  bottom:0;
+  width:100%;
+  height:250px;
+/*  opacity:0.5;*/
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 10;
+  overflow-y: scroll; 
+  white-space: nowrap;
+}
+
+.star-page {
+  display: inline-block;
+  width:175px;
+  vertical-align: middle;
+  height: 175px;
+  margin: 20px;
+  padding:10px;
+  white-space: normal;
+  position: relative;
+  opacity: 2;
 }
 
 .keyboard{
@@ -165,7 +184,7 @@ textarea {
   z-index: 3;
 }
 
-.uk-grid {
+/*.uk-grid {
   position:fixed;
   left:0;
   bottom:0;
@@ -174,7 +193,7 @@ textarea {
   height: 2000px;
   background-color: gray;
   z-index: 20;
-}
+}*/
 
 /* Reset body padding and margins */
 body { margin:0; padding:0; }

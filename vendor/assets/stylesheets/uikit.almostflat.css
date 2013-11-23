@@ -513,7 +513,7 @@ a {
   text-decoration: none;
 }
 a:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 a {
   color: #0077dd;
@@ -2963,15 +2963,19 @@ html:not(.uk-touch) .uk-nav-offcanvas ul a:hover {
     overflow: hidden;
   }
   .uk-description-list-horizontal > dt {
-    width: 160px;
+    width: 100px;
     float: left;
     clear: both;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    border-top: 1px solid #dddddd;
+    vertical-align: center;
+    background-color: lightGray;
   }
   .uk-description-list-horizontal > dd {
-    margin-left: 180px;
+    margin-left: 0px;
+    border-top: 1px solid #dddddd;
   }
 }
 /* Modifier: `uk-description-list-line`

@@ -19,6 +19,16 @@ window.DeepThought = {
           DeepThought.allParents[model.get("id")] = model.get("parent_id");
         })
 
+        var starred = DeepThought.rootCollection.where({starred: true});
+        DeepThought.starredCollection = new DeepThought.Collections.EntryTree(starred);
+        var starShow = new DeepThought.Views.starCollectionView({
+          collection: DeepThought.starredCollection,
+          itemView: DeepThought.Views.starView
+        });
+
+        $("#footer_container").append(starShow.render().$el);
+        $(".star-container").hide();
+
         DeepThought.router = new DeepThought.Router(data);
         console.log("routergoo");
         Backbone.history.start();

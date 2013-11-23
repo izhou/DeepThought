@@ -11,6 +11,7 @@ DeepThought.Views.nodeView = Backbone.Marionette.CollectionView.extend({
   onRender: function() {
     var that = this;
     setTimeout(function() {
+      console.log(DeepThought.rootCollection);
       var headerShow = new DeepThought.Views.headerView({
         model: DeepThought.rootCollection.get(that.root_id)
       });

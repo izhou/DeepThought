@@ -27,9 +27,11 @@ DeepThought.Views.headerView = Backbone.View.extend({
 
     if (this.model.get("starred")) {
       this.model.save({"starred": false});
+      DeepThought.starredCollection.remove(this.model);
       this.render();
     } else {
       this.model.save({"starred": true});
+      DeepThought.starredCollection.add(this.model);
       this.render();
     }
 
