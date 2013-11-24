@@ -9,6 +9,7 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
   itemViewOptions: function(){
     return {siblings: this.siblings,
       parent: this.model,
+      root_id: this.root_id,
       className: "child"}; //className to add vertical tablines css
   },
 
@@ -17,7 +18,8 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
     DeepThought.allCollections[this.model.get("id")] = this.collection;
     DeepThought.allParents[this.model.get("id")] = DeepThought.allParents[this.model.get("id")] || this.model.get("parent_id");
     (this.$el).attr("id",this.model.get("id"));
-    (this.$el).addClass(this.options.className)
+    (this.$el).addClass(this.options.className);
+    this.root_id = parseInt(this.options.root_id);
   },
 
   onRender: function() { //to initially deal with expanded items.
@@ -53,10 +55,6 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
     "drop" : "dropHandler",
     "dragstart" : "dragstartHandler",
     "dragstop": "dragstopHandler",
-  },
-
-  openShortcuts: function() {
-    console.log("I see you!!!!!");
   },
 
   // dropHandler: function() {
@@ -115,33 +113,33 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
         }
         break;
       case 38: //up arrow
-        if (event.ctrlKey)
+        if (event.shiftKey)
           this.moveUp(event);
         else
            this.goUp(event);
         break;
       case 40: //down arrow
-        if (event.ctrlKey){
+        if (event.shiftKey){
           this.moveDown(event);
         } else {
           this.goDown(event);
         }
         break;
       case 39: //right arrow
-        if (event.shiftKey) {
+        if (event.ctrlKey) {
           this.zoomIn(event);
-        } else if (event.ctrlKey){
+        } else if (event.shiftKey){
           this.tabForward(event);
         }
         break;
       case 37: //left arrow
-        if (event.shiftKey)
+        if (event.ctrlKey)
           this.zoomOut(event);
-        else if (event.ctrlKey)
+        else if (event.shiftKey)
           this.tabBackward(event);
         break;
       case 32:
-        if (event.ctrlKey)
+        if (event.shiftKey)
           this.toggleView(event);
     }
     this.$el.focus();
@@ -292,25 +290,19 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
   tabBackward: function(event) {
     event.preventDefault();
     var that = this;
-    var grandparent_id = this.findGrandparent(this.model);
-    if (DeepThought.allCollections[grandparent_id]) {
-      var parent = DeepThought.allCollections[grandparent_id].get(this.model.get("parent_id"));
-      var parentIdx = DeepThought.allCollections[grandparent_id].indexOf(parent);
-      if (parent === _.last(DeepThought.allCollections[grandparent_id].models)) {
-        var newRank = parent.get("rank") + 1;
-      } else {
-        var nextRank = DeepThought.allCollections[grandparent_id].models[parentIdx+1].get("rank");
-        var newRank = (parent.get("rank") + nextRank)/2
+    if (this.model.get("parent_id") !== this.root_id) {
+      var grandparent_id = this.findGrandparent(this.model);
+      if (DeepThought.allCollections[grandparent_id]) {
+        var parent = DeepThought.allCollections[grandparent_id].get(this.model.get("parent_id"));
+        var parentIdx = DeepThought.allCollections[grandparent_id].indexOf(parent);
+        if (parent === _.last(DeepThought.allCollections[grandparent_id].models)) {
+          var newRank = parent.get("rank") + 1;
+        } else {
+          var nextRank = DeepThought.allCollections[grandparent_id].models[parentIdx+1].get("rank");
+          var newRank = (parent.get("rank") + nextRank)/2
+        }
+        this.relocate(this.model, grandparent_id, newRank);
       }
-      //var old_parent_id = this.model.get("parent_id");
-      this.relocate(this.model, grandparent_id, newRank);
-      // this.model.save({parent_id: grandparent_id, rank: newRank}, {success: function(){
-      //   DeepThought.allCollections[old_parent_id].remove(that.model);
-      //   DeepThought.allCollections[grandparent_id].add(that.model, {wait: true});
-      //   DeepThought.allParents[that.model.get("id")] = grandparent_id;
-      //   $("#ta"+that.model.id).focus();
-        //that.focusOnTextArea($("#"+that.model.id)[0]);
-      // }})
     }
   },
 
@@ -363,13 +355,6 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
     }
     var that = this;
     this.relocate(this.model, newParentId, newRank);
-    // DeepThought.allCollections[that.model.get("parent_id")].remove(that.model);
-    // this.model.save({rank: newRank, is_new: true, parent_id: newParentId}, {wait: true, success: function(){ 
-    //   DeepThought.allCollections[newParentId].add(that.model);
-    //   DeepThought.allParents[that.model.get("id")] = newParentId;
-    //   $("#ta"+that.model.id).focus();
-      //that.focusOnTextArea($("#"+that.model.id)[0]);
-    // }});
   },
 
   moveUpHelper: function(model_id, tier) {

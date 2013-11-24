@@ -5,7 +5,6 @@ DeepThought.Router = Backbone.Router.extend({
     "entries/:id" : "nodeShow",
     "search" : "searchShow",
     "contact" : "contactShow",
-    "star": "starShow",
     "shortcuts": "shortcutShow"
   },
 
@@ -21,9 +20,7 @@ DeepThought.Router = Backbone.Router.extend({
         itemView: DeepThought.Views.treeView,
         root_id: id
       });
-
-      var render = nodeShow.render();
-      $("#content").html(render.$el);
+      $("#content").html(nodeShow.render().$el);
 
       var headerShow = new DeepThought.Views.headerView({
         model: DeepThought.rootCollection.get(id)
@@ -35,7 +32,7 @@ DeepThought.Router = Backbone.Router.extend({
         $( ".droppable" ).droppable({hoverClass:"drop-hover", greedy:true, tolerance: "intersect"});
       });
 
-        $('textarea').autogrow();
+      $('textarea').autogrow();
     } else {
       $("#content").html("<div style='color:red'>You do not belong here! Go back.</div>")
     }
@@ -50,13 +47,5 @@ DeepThought.Router = Backbone.Router.extend({
   searchShow: function() {
     var searchShow = new DeepThought.Views.searchView();
     $("#content").html(searchShow.render().$el);
-  },
-
-  starShow: function() {
-
-    //var starShow = new DeepThought.Views.starView();
-    $("#footer_container").append("<div class='star-container'></div>");
-    var starShow = new DeepThought.Views.starView();
-    $(".star-container").append(starShow);
   }
 });

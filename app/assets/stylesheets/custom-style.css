@@ -87,8 +87,6 @@ html {
 .entry_form {
   display: inline-block;
   width: 95%;
-  margin-top: 5px;
-
 }
 
 .uk-form-blank {
@@ -165,7 +163,7 @@ textarea {
 
 .star-page {
   display: inline-block;
-  width:175px;
+  width:150px;
   vertical-align: middle;
   height: 175px;
   margin: 20px;
@@ -173,6 +171,7 @@ textarea {
   white-space: normal;
   position: relative;
   opacity: 2;
+  overflow: hidden;
 }
 
 .keyboard{

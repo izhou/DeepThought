@@ -10,7 +10,7 @@ DeepThought.Views.headerView = Backbone.View.extend({
   keyHandler: function() {
     switch(event.which) {
       case 37: //left arrow
-        if (event.shiftKey) 
+        if (event.ctrlKey) 
           this.zoomOut(event);
         break;
       case 13: //enter
