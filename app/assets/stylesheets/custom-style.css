@@ -56,7 +56,7 @@ label {
 .page {
   position: relative;
   border-radius:10px !important;
-  min-height: 1200px;
+  min-height: 1000px;
   margin: 20px;
   z-index: 0;
 }
@@ -82,6 +82,9 @@ html {
   padding: 0px;
 }
 
+.highlighted {
+  color: red !important;
+}
 
 
 .entry_form {
@@ -186,6 +189,43 @@ textarea {
   z-index: 3;
 }
 
+.landing_pic{
+  color: red;
+  background-image: url("/assets/coloredneurons.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top left;
+  display: inline-block;
+  border-radius: 10px;
+  position: relative;
+  width: 45%;
+  height: 0;
+  padding-bottom: 45%;
+
+}
+
+.field_with_errors { 
+  display: inline; }
+
+.signin_options {
+  display: inline-block;
+  float: right;
+  text-align: right;
+}
+
+.landing_panel{
+
+  display: inline-block;
+  text-align: right;
+  padding-right: 15%;
+  padding-top:5%;
+
+}
+
+#error_explanation {
+  font-size: 75%;
+  color:#d34b00;
+}
 /*.uk-grid {
   position:fixed;
   left:0;
@@ -198,7 +238,7 @@ textarea {
 }*/
 
 /* Reset body padding and margins */
-body { margin:0; padding:0; }
+body { margin:0; padding: 20px}
  
 /* Make Header Sticky */
 #header{ background:#eee; border:1px solid #666; left:0; position:fixed; width:100%; top:0; z-index:10; }

@@ -488,8 +488,10 @@ body {
   font-weight: normal;
   line-height: 20px;
   color: #444444;
-  background-image: -webkit-radial-gradient(100% 100%, center, #2a2a2a, #2a2a2a);
-  background-image: radial-gradient(100% 100% at center, #2a2a2a, #2a2a2a);
+  background-image: url("/assets/blacklinen.png");
+  background-position: top left;
+/*  background-image: -webkit-radial-gradient(100% 100%, center, #2a2a2a, #2a2a2a);
+  background-image: radial-gradient(100% 100% at center, #2a2a2a, #2a2a2a);*/
 }
 /* Only phones */
 @media (max-width: 767px) {
@@ -516,7 +518,7 @@ a:hover {
   text-decoration: none;
 }
 a {
-  color: #0077dd;
+  color: #d34b00;
 }
 a:hover {
   color: #005599;
@@ -1787,7 +1789,7 @@ ul.uk-nav-sub {
  * Nested items
  */
 .uk-nav-side ul a {
-  color: #0077dd;
+  color: #d34b00;
 }
 .uk-nav-side ul a:hover {
   color: #005599;
@@ -1833,7 +1835,7 @@ ul.uk-nav-sub {
  * Nested items
  */
 .uk-nav-dropdown ul a {
-  color: #0077dd;
+  color: #d34b00;
 }
 .uk-nav-dropdown ul a:hover {
   color: #005599;
@@ -1879,7 +1881,7 @@ ul.uk-nav-sub {
  * Nested items
  */
 .uk-nav-navbar ul a {
-  color: #0077dd;
+  color: #d34b00;
 }
 .uk-nav-navbar ul a:hover {
   color: #005599;
@@ -1923,7 +1925,7 @@ ul.uk-nav-sub {
  * Nested items
  */
 .uk-nav-search ul a {
-  color: #0077dd;
+  color: #d34b00;
 }
 .uk-nav-search ul a:hover {
   color: #005599;
@@ -2187,7 +2189,7 @@ html:not(.uk-touch) .uk-nav-offcanvas ul a:hover {
  * Link colors
  */
 .uk-navbar-content > a:not([class]) {
-  color: #0077dd;
+  color: #d34b00;
 }
 .uk-navbar-content > a:not([class]):hover {
   color: #005599;
@@ -2263,6 +2265,7 @@ html:not(.uk-touch) .uk-nav-offcanvas ul a:hover {
  ========================================================================== */
 .uk-navbar-flip {
   float: right;
+  padding-right: 20px;
 }
 /* Hooks
  ========================================================================== */
@@ -2319,7 +2322,7 @@ html:not(.uk-touch) .uk-nav-offcanvas ul a:hover {
  * Items
  */
 .uk-subnav > li > a {
-  color: #0077dd;
+  color: #d34b00;
 }
 .uk-subnav > li > a:hover {
   color: #005599;
@@ -2643,7 +2646,7 @@ html:not(.uk-touch) .uk-nav-offcanvas ul a:hover {
   padding: 8px 12px;
   border: 1px solid transparent;
   border-bottom-width: 0;
-  color: #0077dd;
+  color: #d34b00;
   text-decoration: none;
   border-radius: 4px 4px 0 0;
   text-shadow: 0 1px 0 #ffffff;
@@ -3600,7 +3603,7 @@ a.uk-button {
 }
 /* Color */
 .uk-button-link {
-  color: #0077dd;
+  color: #d34b00;
 }
 .uk-button-link:hover,
 .uk-button-link:focus,

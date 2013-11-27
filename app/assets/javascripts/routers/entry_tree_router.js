@@ -3,7 +3,7 @@ DeepThought.Router = Backbone.Router.extend({
   routes: {
     "": "rootShow",
     "entries/:id" : "nodeShow",
-    "search" : "searchShow",
+    "search/:term" : "searchShow",
     "contact" : "contactShow",
     "shortcuts": "shortcutShow"
   },
@@ -44,8 +44,34 @@ DeepThought.Router = Backbone.Router.extend({
     $("#content").html(contactShow.render().$el); 
   },
 
-  searchShow: function() {
-    var searchShow = new DeepThought.Views.searchView();
+  searchShow: function(term) {
+    var root = DeepThought.rootCollection.findWhere({parent_id: null});
+    var searchResults = DeepThought.rootCollection.filter( function(entry) {
+      return entry.get("title").indexOf(term) !== -1;
+    });
+
+    var searchParents = searchResults.map(function(entry) {
+      return DeepThought.rootCollection.get(entry.get("parent_id"));
+    });
+
+    // var addParent = function(entry) {
+    //   var parent = DeepThought.rootCollection.get(entry.get("parent_id"));
+    //   if (parent && searchResults.indexOf(parent) == -1) {
+    //     return parent;
+    //     // searchResults.push(parent);
+    //     // return addParent(parent);
+    //   }
+    // };
+    // searchResults.forEach(function(entry) {addParent(entry)} );
+    var searchShow = new DeepThought.Views.nodeView({
+      collection: new DeepThought.Collections.EntryTree(searchParents),
+      itemView: DeepThought.Views.treeView,
+      root_id: root.get("id")
+    });
+
     $("#content").html(searchShow.render().$el);
+    $('textarea:contains('+term+') ').addClass("highlighted"); 
+
+
   }
 });

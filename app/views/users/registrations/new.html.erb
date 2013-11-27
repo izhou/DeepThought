@@ -1,18 +1,75 @@
-<h2>Sign up</h2>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Starter template</title>
+  </head>
+  <body>
+    <div id="header">
+      <nav class="uk-navbar">
+<!--         <div class="uk-container uk-container-center"> -->
+        <div class="uk-navbar-flip">
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+        <%= form_for("user", html: {class: 'uk-form'}, url: user_session_path) do |f| %>
+        <%= f.text_field :email %>
+        <%= f.password_field :password %>
+        <%= f.submit 'Sign in' %>
+<!--         </div> -->
+        </div>
+      </nav>
+    </div>
+    
+    <br>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
+    <div class='signin_options' style='color:lightGray'>
+      <%= f.check_box :remember_me %>
+      <%= f.label :remember_me %>
+      <% end %>
+      <br>
+      <%= link_to "Forgot your password?", new_password_path('user') %>
+    </div>
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
+    <br><br>
 
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
+    <div class='landing_pic'>
+    </div>
 
-  <div><%= f.submit "Sign up" %></div>
-<% end %>
+    <div class='landing_panel'>
+      <h2 style= 'font-size: 300%'>Welcome to</h2>
+      <h1 style= 'color:#d34b00; font-size: 500%'>DeepThought</h1>
+      <p style= 'color:lightGray;'>A tool to organize your mind.</p>
+      <br>
+      <div style='background-color:#444444; color:lightGray; border:none; width:50% !important; display: inline-block; text-align: left; float:center' class='uk-panel-box sign-up'>
+        <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {class: 'uk-form'}) do |f| %>
+          <%= devise_error_messages! %>
 
-<%= render "users/shared/links" %>
+          <div><%= f.label :email %><br />
+          <%= f.email_field :email, value: "Email"%></div>
+
+          <div><%= f.label :password %><br />
+          <%= f.password_field :password, value: "Password" %></div>
+
+          <div><%= f.label :password_confirmation %><br />
+          <%= f.password_field :password_confirmation %></div>
+
+          <div><%= f.submit "Sign up" %></div>
+        <% end %>
+
+      </div>
+      <br><br><br><br><br>
+    </div>
+
+
+
+
+  </body>
+  
+  <div id="footer">
+  </div>
+</html>
+
+<script>
+$(document).ready(function(){
+  window.DeepThought.initialize();
+}); 
+
+</script>

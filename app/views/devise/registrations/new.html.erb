@@ -1,18 +1,110 @@
-<h2>Sign up</h2>
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <div id="header">
+      <nav class="uk-navbar">
+<!--         <div class="uk-container uk-container-center"> -->
+        <div class="uk-navbar-flip">
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+        <%= form_for("user", html: {class: 'uk-form'}, url: user_session_path) do |f| %>
+        <%= f.text_field :email, placeholder: "Email" %>
+        <%= f.password_field :password, placeholder: "Password" %>
+        <%= f.submit 'Sign in', class: "button" %>
+<!--         </div> -->
+        </div>
+      </nav>
+    </div>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
+    <div class='signin_options' style='color:lightGray'>
+      <%= f.check_box :remember_me %>
+      <%= f.label :remember_me %>
+      <% end %>
+      <br>
+      <%= link_to "Forgot your password?", new_password_path('user') %>
+    </div>
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
+    <br><br>
+    <div class="uk-grid" style="padding-left:50px">
+      <div class='landing_pic uk-width-1-2'>
+      </div>
 
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
+      <div class='landing_panel uk-width-1-2'>
+        <h2 style= 'font-size: 200%'>Welcome to</h2>
+        <h1 style= 'color:#d34b00; font-size: 450%'>DeepThought</h1>
+        <p style= 'color:lightGray;'>A tool to organize your mind.</p>
+        <br>
+        <div style='background-color:#444444; color:lightGray; border:none; display: inline-block; text-align: left; float:center' class='uk-panel-box sign-up'>
+          
+          <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {class: 'uk-form'}) do |f| %>
 
-  <div><%= f.submit "Sign up" %></div>
-<% end %>
+            <%= devise_error_messages! %>
+            
 
-<%= render "devise/shared/links" %>
+            <div><%= f.label :email %><br />
+            <%= f.email_field :email %></div>
+
+            <div><%= f.label :password %><br />
+            <%= f.password_field :password %></div>
+
+            <div><%= f.label :password_confirmation %><br />
+            <%= f.password_field :password_confirmation %></div>
+            <br>
+
+            <div style='text-align: center'><%= f.submit "Sign up" %><br><br>
+            <a style='text-align: center'>Sign in as Demo User</a>
+            </div>
+          <% end %>
+          
+
+        </div>
+        <br><br><br><br><br>
+      </div>
+    </div>
+    </div>
+
+    <div class="panel_container uk-grid">
+      <div class="uk-width-medium-1-3">
+        <div class="uk-panel">
+          <div id='content'>
+            <p class="notice" style="color:green"><%= notice %></p>
+            <p class="alert" style="color:red"><%= alert %></p>
+            A clone of Workflowy, written in Ruby on Rails 3 and Backbone.js
+          </div>
+        </div>
+      </div>
+     <div class="uk-width-medium-1-3">
+        <div class="uk-panel">
+          <div id='content'>
+            <p class="notice" style="color:green"><%= notice %></p>
+            <p class="alert" style="color:red"><%= alert %></p>
+            DeepThought is a versatile tool to organize your thoughts into nested lists. 
+          </div>
+        </div>
+      </div>    <div class="uk-width-medium-1-3">
+        <div class="uk-panel">
+          <div id='content'>
+            <p class="notice" style="color:green"><%= notice %></p>
+            <p class="alert" style="color:red"><%= alert %></p>
+            Patience.....DeepThought is calculating....
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+  </body>
+  
+  <div id="footer">
+  </div>
+</html>
+
+<script>
+$(document).ready(function(){
+  window.DeepThought.initialize();
+}); 
+
+</script>
