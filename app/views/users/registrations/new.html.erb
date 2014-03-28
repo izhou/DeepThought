@@ -7,7 +7,7 @@
     <div id="header">
       <nav class="uk-navbar">
 <!--         <div class="uk-container uk-container-center"> -->
-        <div class="uk-navbar-flip">
+        <div class="uk-navbar-flip" style='padding:5px !important'>
 
         <%= form_for("user", html: {class: 'uk-form'}, url: user_session_path) do |f| %>
         <%= f.text_field :email %>

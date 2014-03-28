@@ -13,15 +13,19 @@ li {
 }
 
 .child {
-  padding-bottom: 5px;
+  padding-bottom: 2px;
   border-left: 1px dotted lightGray;
 }
 
-.uk-navbar {
+/*.uk-navbar {
   background: black;
   z-index: 100 !important;
 }
+*/
 
+#header {
+  box-shadow: 0px 1px 2px #888888;
+}
 .bullet {
   text-align:center;
 }
@@ -55,7 +59,7 @@ label {
 
 .page {
   position: relative;
-  border-radius:10px !important;
+  border-radius:5px !important;
   min-height: 1000px;
   margin: 20px;
   z-index: 0;
@@ -69,7 +73,7 @@ html {
 }
 
 #content {
-  margin: 35px;
+  margin: 20px;
 }
 
 .star {
@@ -183,6 +187,7 @@ textarea {
   box-shadow: 10px 10px 5px black;
 }
 #keyboard-shortcuts{
+  background-color: #ffffff;
   position:absolute;
   bottom:0px;
   left:0px;
@@ -191,7 +196,7 @@ textarea {
 
 .landing_pic{
   color: red;
-  background-image: url("/assets/coloredneurons.png");
+  /*background-image: url("/assets/blueneurons.png");*/
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top left;
@@ -222,9 +227,22 @@ textarea {
 
 }
 
+input:focus, textarea:focus {
+    outline: none !important;
+    border: none !important;
+}
+
+textarea {
+  padding: 0px !important;
+}
+
 #error_explanation {
   font-size: 75%;
   color:#d34b00;
+}
+
+#uk-button-link {
+
 }
 /*.uk-grid {
   position:fixed;
@@ -241,7 +259,7 @@ textarea {
 body { margin:0; padding: 20px}
  
 /* Make Header Sticky */
-#header{ background:#eee; border:1px solid #666; left:0; position:fixed; width:100%; top:0; z-index:10; }
+#header{ background:#eee; left:0; position:fixed; width:100%; top:0; z-index:10; }
 /*#header{ line-height:60px; margin:0 auto; width:940px; text-align:center; }*/
  
 /* CSS for the content of page. I am giving top and bottom padding of 80px to make sure the header and footer do not overlap the content.*/

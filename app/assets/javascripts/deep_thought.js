@@ -30,13 +30,19 @@ window.DeepThought = {
         $(".star-container").hide();
 
         $("#showStars").click(function() {
-          $(".star-container").show();
+          event.stopPropagation();
+          $(".star-container").slideToggle();
+
           setTimeout(function() {
-            $(window).one("click",function() {
+            $('body').one("click", function() {
+              event.stopPropagation();
               $(".star-container").slideUp();
+
             });
-          },0);
-        });
+          })
+
+        })
+
 
 
         DeepThought.router = new DeepThought.Router(data);
