@@ -40,10 +40,7 @@ window.DeepThought = {
 
             });
           })
-
         })
-
-
 
         DeepThought.router = new DeepThought.Router(data);
         Backbone.history.start();

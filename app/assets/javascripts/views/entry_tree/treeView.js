@@ -45,7 +45,7 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
       collectionView.$("#ul"+itemView.model.get("parent_id")).append(itemView.el);
     }
 
-    // $('textarea').autogrow();
+    $('textarea').autogrow();
   },
 
   events: {

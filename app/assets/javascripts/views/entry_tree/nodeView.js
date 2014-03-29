@@ -47,7 +47,7 @@ DeepThought.Views.nodeView = Backbone.Marionette.CollectionView.extend({
     } else {
       $container.children().eq(index - 1).after(itemView.el);
     }
-    // $('textarea').autogrow();
+    $('textarea').autogrow();
   }
 
 });

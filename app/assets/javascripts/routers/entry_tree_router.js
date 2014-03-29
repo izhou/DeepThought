@@ -32,7 +32,7 @@ DeepThought.Router = Backbone.Router.extend({
         $( ".droppable" ).droppable({hoverClass:"drop-hover", greedy:true, tolerance: "intersect"});
       });
 
-      // $('textarea').autogrow();
+      $('textarea').autogrow();
     } else {
       $("#content").html("<div style='color:red'>You do not belong here! Go back.</div>")
     }
