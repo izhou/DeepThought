@@ -11,7 +11,7 @@ DeepThought.Views.nodeView = Backbone.Marionette.CollectionView.extend({
   onRender: function() {
     var that = this;
     setTimeout(function() {
-      console.log(DeepThought.rootCollection);
+      // console.log(DeepThought.rootCollection);
       // var headerShow = new DeepThought.Views.headerView({
       //   model: DeepThought.rootCollection.get(that.root_id)
       // });
@@ -47,7 +47,8 @@ DeepThought.Views.nodeView = Backbone.Marionette.CollectionView.extend({
     } else {
       $container.children().eq(index - 1).after(itemView.el);
     }
-    $('textarea').autogrow();
+
+    $('textarea').autosize();
   }
 
 });

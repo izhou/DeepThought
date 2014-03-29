@@ -4,15 +4,17 @@
     <%var ancestry = model.get("ancestry").split("/")%>
     <%ancestry.forEach(function(id){%>
       <%var ancestor = DeepThought.rootCollection.findWhere({id: parseInt(id)})%>
-      <li><a href="#/entries/<%=id%>"><%=ancestor.get("title")%></a></li>
+      <li>
+        <a href="#/entries/<%=id%>"><%=ancestor.get("title")%></a>
+      </li>
     <%})%>
     <li class="uk-active"></li>
   </ul>
   <hr>
 
   <% var model_id = model.get('id')%>
-
-  <h1>
+ 
+  <h2>
   <ul id="ul0">
     <li id="<%model_id%>">
       <form id="form<%=model_id%>">
@@ -21,7 +23,7 @@
       </form>
     </li>
   </ul>
-  </h1>
+  </h2>
   <%} else {%>
   <br>
   <%}%>

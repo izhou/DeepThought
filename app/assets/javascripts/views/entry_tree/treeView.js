@@ -45,7 +45,7 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
       collectionView.$("#ul"+itemView.model.get("parent_id")).append(itemView.el);
     }
 
-    $('textarea').autogrow();
+    $('textarea').autosize();
   },
 
   events: {
@@ -193,6 +193,7 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
   zoomOut:function(event) {  
     this.saveEntry(event);
     var grandparent_id = this.findGrandparent(this.model);
+    console.log(grandparent_id);
     if(grandparent_id)
       DeepThought.router.navigate("#/entries/"+grandparent_id);
   },

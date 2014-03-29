@@ -4403,8 +4403,8 @@ input.uk-search-field {
 }
 .uk-open > .uk-dropdown {
   display: block;
-  -webkit-animation: uk-fade 0.2s ease-in-out;
-  animation: uk-fade 0.2s ease-in-out;
+  -webkit-animation: uk-slide-bottom 0.5s ease-in-out;
+  animation: uk-slide-bottom 0.5s ease-in-out;
   -webkit-transform-origin: 0 0;
   transform-origin: 0 0;
 }

@@ -9,16 +9,18 @@ DeepThought.Router = Backbone.Router.extend({
   },
 
   rootShow: function(){
+    console.log('rooted');
     var root = DeepThought.rootCollection.findWhere({parent_id: null});
     this.nodeShow(root.get("id"));
   },
 
   nodeShow: function(id){
+    console.log('noded');
     if (DeepThought.allCollections[id]) {
       var nodeShow = new DeepThought.Views.nodeView({
         collection: DeepThought.allCollections[id],
         itemView: DeepThought.Views.treeView,
-        root_id: id
+        root_id: id,
       });
       $("#content").html(nodeShow.render().$el);
 
@@ -32,7 +34,8 @@ DeepThought.Router = Backbone.Router.extend({
         $( ".droppable" ).droppable({hoverClass:"drop-hover", greedy:true, tolerance: "intersect"});
       });
 
-      $('textarea').autogrow();
+      $('textarea').autosize();
+
     } else {
       $("#content").html("<div style='color:red'>You do not belong here! Go back.</div>")
     }

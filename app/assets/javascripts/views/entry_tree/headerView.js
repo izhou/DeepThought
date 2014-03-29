@@ -35,22 +35,14 @@ DeepThought.Views.headerView = Backbone.View.extend({
       DeepThought.starredCollection.add(this.model);
       this.render();
     }
-
   },
 
-  zoomOut:function(event) {
-    event.preventDefault();
-    console.log("boooooo");
-    var parent_id = this.model.get("parent_id");
-//    var grandparent_id = this.findGrandparent(this.model);
-    if(parent_id) {
-      var entryShow = new DeepThought.Views.nodeView({
-        collection: DeepThought.allCollections[parent_id],
-        itemView: DeepThought.Views.treeView,
-        root_id: parent_id
-      });
-    $("#content").html(entryShow.render().$el);
-    }
+
+  zoomOut:function(event) {  
+    this.saveEntry(event);
+    var parent_id = this.model.get("parent_id");;
+    if(parent_id)
+      DeepThought.router.navigate("#/entries/"+parent_id);
   },
 
   createChild: function(event) {
