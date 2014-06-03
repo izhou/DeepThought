@@ -32,7 +32,7 @@
 
       <div class='landing_panel uk-width-1-2'>
         <h2 style= 'font-size: 200%'>Welcome to</h2>
-        <h1 style= 'color:#d34b00; font-size: 450%'>DeepThought</h1>
+        <h1 style= 'color:lightBlue; font-size: 450%'>DeepThought</h1>
         <p style= 'color:lightGray;'>A tool to organize your mind.</p>
         <br>
         <div style='background-color:#444444; color:lightGray; border:none; display: inline-block; text-align: left; float:center' class='uk-panel-box sign-up'>
@@ -53,7 +53,13 @@
             <br>
 
             <div style='text-align: center'><%= f.submit "Sign up" %><br><br>
-            <a style='text-align: center'>Sign in as Demo User</a>
+           
+           <% end %> 
+            
+          <%= form_for("user", html: {class: 'uk-form'}, url: user_session_path) do |f| %>
+            <%= f.hidden_field :email, value: "i@ire.ne" %>
+            <%= f.hidden_field :password, value: "ginger145733" %>
+            <%= f.submit 'Sign in as Demo User', class: "button" %>
             </div>
           <% end %>
           

@@ -29,12 +29,12 @@ DeepThought.Views.headerView = Backbone.View.extend({
     if (this.model.get("starred")) {
       this.model.save({"starred": false});
       DeepThought.starredCollection.remove(this.model);
-      this.render();
     } else {
       this.model.save({"starred": true});
-      DeepThought.starredCollection.add(this.model);
-      this.render();
+      DeepThought.starredCollection.add(this.model);  
     }
+    
+    this.render();
   },
 
 
@@ -57,7 +57,6 @@ DeepThought.Views.headerView = Backbone.View.extend({
     event.preventDefault();
      if (this.el.nextSibling.firstChild.tagName === "LI") {
       this.focusOnTextArea(this.el.nextSibling.firstChild);
-
      }
   },
 

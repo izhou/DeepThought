@@ -15,7 +15,7 @@
 //= require jquery.serializeJSON.min
 //= require jquery-ui-1.10.3.custom.min
 //= require jquery.autosize.min
-//= require uikit
+//= require uikit.min
 //= require underscore
 //= require backbone
 //= require backbone.marionette

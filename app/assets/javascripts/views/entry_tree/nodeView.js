@@ -30,7 +30,7 @@ DeepThought.Views.nodeView = Backbone.Marionette.CollectionView.extend({
 
   itemViewOptions: function(){
     var root_id = this.options.root_id;
-    return {root_id: root_id}
+    return {root_id: root_id};
     
   },
 

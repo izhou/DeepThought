@@ -203,7 +203,6 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
     //this.saveEntry(event);
     var rank = this.findNewRank(this);
     var that = this;
-    console.log(DeepThought.allCollections[this.model.get("parent_id")]);
     DeepThought.allCollections[this.model.get("parent_id")].create({
       title:"", 
       parent_id: this.model.get("parent_id"),
@@ -240,9 +239,7 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
       this.model.destroy();
     }
   },
-// var id = this.model.get("id");
-// var formData = $("#form"+id).serializeJSON();
-// this.model.save(formData);
+
   tabForward: function(event) {
     event.preventDefault();
     var that = this;
