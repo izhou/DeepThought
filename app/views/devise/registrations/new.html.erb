@@ -6,36 +6,35 @@
     <div id="header">
       <nav class="uk-navbar">
 <!--         <div class="uk-container uk-container-center"> -->
-        <div class="uk-navbar-flip" style="padding:5px;">
+        <div class="uk-navbar-flip" style="padding:5px; padding-right:1em">
 
         <%= form_for("user", html: {class: 'uk-form'}, url: user_session_path) do |f| %>
         <%= f.text_field :email, placeholder: "Email" %>
         <%= f.password_field :password, placeholder: "Password" %>
-        <%= f.submit 'Sign in', class: "button" %>
+        <%= f.submit 'Sign in', class: "uk-button" %>
 <!--         </div> -->
         </div>
       </nav>
     </div>
 
-    <div class='signin_options' style='color:lightGray'>
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
-      <% end %>
-      <br>
-      <%= link_to "Forgot your password?", new_password_path('user') %>
-    </div>
-
-    <br><br>
-    <div class="uk-grid" style="padding-left:50px">
-      <div class='landing_pic uk-width-1-2'>
-      </div>
-
-      <div class='landing_panel uk-width-1-2'>
-        <h2 style= 'font-size: 200%'>Welcome to</h2>
-        <h1 style= 'color:lightBlue; font-size: 450%'>DeepThought</h1>
-        <p style= 'color:lightGray;'>A tool to organize your mind.</p>
+    <div class="uk-grid">
+<!--       <div class='landing_pic uk-width-1-2'>
+      </div> -->
+      <div class='landing_panel uk-width-1-1' "text-align: center !important">
+      <br><br>
+        <div class='signin_options'>
+          <%= f.check_box :remember_me %>
+          <%= f.label :remember_me %>
+          <% end %>
+          <br>
+          <%= link_to "Forgot your password?", new_password_path('user') %>
+        </div>
+        <br><br>
+        <h2 style= 'font-size: 200%; color:#333;'>Welcome to</h2>
+        <h1 style= 'color:#3366FF; font-size: 450%; margin-top:0 !important;'>DeepThought</h1>
+        <p style= 'color:#333;'>A tool to organize your mind.</p>
         <br>
-        <div style='background-color:#444444; color:lightGray; border:none; display: inline-block; text-align: left; float:center' class='uk-panel-box sign-up'>
+        <div style='background-color:#444; color:lightGray; border:none; display: inline-block; text-align: left; float:center' class='uk-panel-box sign-up'>
           
           <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {class: 'uk-form'}) do |f| %>
 
@@ -50,16 +49,15 @@
 
             <div><%= f.label :password_confirmation %><br />
             <%= f.password_field :password_confirmation %></div>
-            <br>
 
-            <div style='text-align: center'><%= f.submit "Sign up" %><br><br>
+            <div style='text-align: center; color:#444'><%= f.submit "Sign up", class: "uk-button", style:"font-weight:bold; margin-top:0.75em" %><br>
            
            <% end %> 
             
           <%= form_for("user", html: {class: 'uk-form'}, url: user_session_path) do |f| %>
             <%= f.hidden_field :email, value: "i@ire.ne" %>
             <%= f.hidden_field :password, value: "ginger145733" %>
-            <%= f.submit 'Sign in as Demo User', class: "button" %>
+            <%= f.submit 'Sign in as Demo User', class: "uk-button-link", style:"color:lightBlue; margin-top:0.5em"%>
             </div>
           <% end %>
           
@@ -76,6 +74,9 @@
           <div id='content'>
             <p class="notice" style="color:green"><%= notice %></p>
             <p class="alert" style="color:red"><%= alert %></p>
+            DeepThought is a clone of Workflowy, written in Ruby on Rails and Backbone JS. 
+
+
             A clone of Workflowy, written in Ruby on Rails 3 and Backbone.js
           </div>
         </div>
@@ -93,7 +94,8 @@
           <div id='content'>
             <p class="notice" style="color:green"><%= notice %></p>
             <p class="alert" style="color:red"><%= alert %></p>
-            Patience.....DeepThought is calculating....
+            Pending features
+
           </div>
         </div>
       </div>

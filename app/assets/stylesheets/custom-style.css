@@ -196,7 +196,7 @@ textarea {
 
 .landing_pic{
   color: red;
-  /*background-image: url("/assets/blueneurons.png");*/
+  background-image: url("/assets/blueneurons.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top left;
@@ -213,17 +213,19 @@ textarea {
   display: inline; }
 
 .signin_options {
-  display: inline-block;
+  /*display: inline-block;*/
   float: right;
   text-align: right;
+  position:absolute;
+  right:1em;
 }
 
 .landing_panel{
-
+  background-image: url("/assets/neuronsblue.png");
+  background-color:white;
+  opacity:0.95;
   display: inline-block;
-  text-align: right;
-  padding-right: 15%;
-  padding-top:5%;
+  text-align: center;
 
 }
 
@@ -256,7 +258,7 @@ textarea {
 }*/
 
 /* Reset body padding and margins */
-body { margin:0; padding: 20px}
+body { margin:0}
  
 /* Make Header Sticky */
 #header{ background:#eee; left:0; position:fixed; width:100%; top:0; z-index:10; }
