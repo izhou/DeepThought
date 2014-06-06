@@ -1,7 +1,6 @@
 
 DeepThought.Views.nodeView = Backbone.Marionette.CollectionView.extend({
-  //itemView: DeepThought.Views.treeView,
-  
+
   tagName: "ul",
   id: "ul1",
   initialize: function() {
@@ -11,12 +10,6 @@ DeepThought.Views.nodeView = Backbone.Marionette.CollectionView.extend({
   onRender: function() {
     var that = this;
     setTimeout(function() {
-      // console.log(DeepThought.rootCollection);
-      // var headerShow = new DeepThought.Views.headerView({
-      //   model: DeepThought.rootCollection.get(that.root_id)
-      // });
-      // $("#content").prepend(headerShow.render().$el);
-
       if ($(":focus").length === 0) {
          var children = DeepThought.allCollections[that.root_id].models;
          if (children.length !== 0 ){

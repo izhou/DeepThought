@@ -85,11 +85,19 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
     el.firstElementChild.getElementsByTagName("textarea")[0].focus();
   },
 
-  saveEntry: function() {
+  saveEntry: function(event, callback) {
+    callback = callback || function() {};
     event.stopPropagation();
     var id = this.model.get("id");
     var formData = $("#form"+id).serializeJSON();
-    this.model.save(formData);
+    var that = this;
+    this.model.save(formData, {success: function() {
+        DeepThought.rootCollection.get(id).save({"title": formData.entry.title}, {wait: true, success: callback()})
+      }
+    });
+    // DeepThought.rootCollection.get(id).set(formData, {wait:true});
+
+
   },
 
   keyHandler:function() {
@@ -174,9 +182,11 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
     event.preventDefault();
     event.stopPropagation();
     var that = this;
+    var newExpanded = !this.model.get("expanded")
 
-    this.model.save({"expanded" : !this.model.get("expanded")},
+    this.model.save({"expanded" : newExpanded},
       {success: function(){ 
+        that.model.set({"expanded" : newExpanded});
         $("#bullet"+ that.model.get("id")).toggleClass("bullet-shadow");
         var button = $("#button"+that.model.get("id"));
         button.attr("value", (button[0].value === '+' ? '-' : '+'));
@@ -186,16 +196,22 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
   },
 
   zoomIn:function(event) {
-    this.saveEntry(event);
-    DeepThought.router.navigate("#/entries/"+this.model.get("id"));    
+    var that = this;
+    this.saveEntry(event, function() {
+      DeepThought.router.navigate("#/entries/"+that.model.get("id"));    
+    });
+
   },
 
-  zoomOut:function(event) {  
-    this.saveEntry(event);
-    var grandparent_id = this.findGrandparent(this.model);
-    console.log(grandparent_id);
-    if(grandparent_id)
-      DeepThought.router.navigate("#/entries/"+grandparent_id);
+  zoomOut:function(event) {
+    var that = this;
+    this.saveEntry(event, function(){
+      var grandparent_id = that.findGrandparent(that.model);
+      console.log(grandparent_id);
+      if(grandparent_id)
+        DeepThought.router.navigate("#/entries/"+grandparent_id);      
+    })
+
   },
 
   createEntry: function(event) {
@@ -203,15 +219,15 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
     //this.saveEntry(event);
     var rank = this.findNewRank(this);
     var that = this;
-    DeepThought.allCollections[this.model.get("parent_id")].create({
+    var newEntry = DeepThought.allCollections[this.model.get("parent_id")].create({
       title:"", 
       parent_id: this.model.get("parent_id"),
       rank: rank,
       is_new: true},
       {wait: true, success: function() {
         DeepThought.allParents[that.model.get("id")] = that.model.get("parent_id");
-        DeepThought.rootCollection.add(that.model, {wait: true});
-        DeepThought.rootCollection.fetch();
+        DeepThought.rootCollection.add(newEntry);
+        // DeepThought.rootCollection.fetch();
         that.focusOnTextArea(that.el.nextSibling);
       }}
     );
@@ -281,6 +297,7 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
   expand: function(model) {
     var id = model.get("id");
     model.save({"expanded":true},{success: function() {
+      model.set({"expanded":true});
       $("#ul"+id).slideToggle();
       $("#bullet"+id).removeClass("bullet-shadow");
       $("#button"+id).value = '-';

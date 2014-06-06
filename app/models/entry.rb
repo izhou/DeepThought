@@ -18,7 +18,7 @@ class Entry < ActiveRecord::Base
   before_validation( on: :create) do 
     self.completed ||= false
     self.title ||= ""
-    self.expanded ||= false
+    self.expanded ||= true
     self.starred ||= false
     true
   end
