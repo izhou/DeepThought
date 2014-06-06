@@ -227,7 +227,6 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
       {wait: true, success: function() {
         DeepThought.allParents[that.model.get("id")] = that.model.get("parent_id");
         DeepThought.rootCollection.add(newEntry);
-        // DeepThought.rootCollection.fetch();
         that.focusOnTextArea(that.el.nextSibling);
       }}
     );

@@ -14,10 +14,11 @@ DeepThought.Views.headerView = Backbone.View.extend({
           this.zoomOut(event);
         break;
       case 13: //enter
-        this.createChild(event);
+        this.createEntry(event);
         break;
       case 40: //down arrow
         this.goDown(event);
+        break;
     }
   },
 
@@ -45,13 +46,53 @@ DeepThought.Views.headerView = Backbone.View.extend({
       DeepThought.router.navigate("#/entries/"+parent_id);
   },
 
-  createChild: function(event) {
+  createEntry: function(event) {
     event.preventDefault();
-    DeepThought.rootCollection.create({
+    var that = this;
+    var rank = 0;
+    if (DeepThought.allCollections[this.model.id].length > 0) {
+      rank = DeepThought.allCollections[this.model.id].models[0].get("rank") - 1;
+    }
+    var newEntry = DeepThought.allCollections[this.model.id].create({
       title:"",
-      parent_id: this.model.id
-    }, {wait: true});
+      parent_id: this.model.id,
+      rank: rank,
+      is_new: true}, 
+      { wait: true, success: function() {
+        DeepThought.allParents[newEntry.id] = newEntry.id;
+        DeepThought.rootCollection.add(newEntry);
+        that.focusOnTextArea(that.el.nextSibling);
+      }}
+    )
   },
+
+  // createChild: function(event) {
+  //   event.preventDefault();
+  //   DeepThought.rootCollection.create({
+  //     title:"",
+  //     parent_id: this.model.id
+  //   }, {wait: true});
+  // },
+
+
+  //   createEntry: function(event) {
+  //   event.preventDefault();
+  //   //this.saveEntry(event);
+  //   var rank = this.findNewRank(this);
+  //   var that = this;
+  //   var newEntry = DeepThought.allCollections[this.model.get("parent_id")].create({
+  //     title:"", 
+  //     parent_id: this.model.get("parent_id"),
+  //     rank: rank,
+  //     is_new: true},
+  //     {wait: true, success: function() {
+  //       DeepThought.allParents[that.model.get("id")] = that.model.get("parent_id");
+  //       DeepThought.rootCollection.add(newEntry);
+  //       that.focusOnTextArea(that.el.nextSibling);
+  //     }}
+  //   );
+  // },
+
 
   goDown: function(event) {
     event.preventDefault();
