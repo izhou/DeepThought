@@ -4,13 +4,13 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
     return { model:this.model};
   },
   tagName: "li",
-  className: "droppable",
+  className: "droppable list",
   itemView: DeepThought.Views.treeView,
   itemViewOptions: function(){
     return {siblings: this.siblings,
       parent: this.model,
       root_id: this.root_id,
-      className: "child"}; //className to add vertical tablines css
+      className: "child list"}; //className to add vertical tablines css
   },
 
   initialize: function(options) {

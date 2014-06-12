@@ -8,7 +8,7 @@
   text-decoration: line-through !important;
 }
 
-li {
+.list {
   list-style-type: none;
 }
 
@@ -69,7 +69,7 @@ label {
 }
 
 html {
-  height: 150%;
+  height: 100%;
 }
 
 #content {
@@ -220,13 +220,26 @@ textarea {
   right:1em;
 }
 
+.welcome{
+  height:50%;
+  padding:8%;
+}
+
 .landing_panel{
+  height:100%;
   background-image: url("/assets/neuronsblue.png");
   background-color:white;
   opacity:0.90;
   display: inline-block;
   text-align: center;
+  box-shadow: 0px 5px 10px 0px #999;
+  /*height:750px;*/
 
+}
+
+.panel_container{
+  padding:2em !important; 
+  margin:4em !important;
 }
 
 input:focus, textarea:focus {
@@ -258,7 +271,7 @@ textarea {
 }*/
 
 /* Reset body padding and margins */
-body { margin:0}
+body { margin:0; height:100%;}
  
 /* Make Header Sticky */
 #header{ background:#eee; left:0; position:fixed; width:100%; top:0; z-index:10; }
