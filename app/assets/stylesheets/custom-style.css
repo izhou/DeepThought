@@ -282,5 +282,5 @@ body { margin:0; height:100%;}
 #content{}
  
 /* Make Footer Sticky */
-#footer {bottom:0; height:60px; left:0; position:fixed; width:100%; }
+#footer {bottom:0; height:0px; left:0; position:fixed; width:100%; }
 /*#footer { line-height:60px; margin:0 auto; width:940px; text-align:center; }*/
