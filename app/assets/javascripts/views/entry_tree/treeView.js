@@ -89,11 +89,12 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
     callback = callback || function() {};
     event.stopPropagation();
     var id = this.model.get("id");
-    var formData = $("#form"+id).serializeJSON();
-    var that = this;
-    this.model.save(formData, {success: function() {
-      if (DeepThought.rootCollection.get(id)) //in the event it was just deleted
-        DeepThought.rootCollection.get(id).save({"title": formData.entry.title}, {wait: true, success: callback()})
+      var formData = $("#form"+id).serializeJSON();
+      var that = this;
+      this.model.save(formData, {success: function() {
+        if (DeepThought.rootCollection.get(id)) {//in the event it was just deleted
+          DeepThought.rootCollection.get(id).save({"title": formData.entry.title}, {wait: true, success: callback()});
+        }
       }
     });
   },
@@ -223,6 +224,12 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
     var newTitle = oldTitle.slice(0, caretPos);
     var that = this;
 
+    if (oldTitle.length === 0){ //if empty, tab out.
+      this.tabBackward(event);
+      return;
+
+    }
+
     this.model.save({"title": newTitle} , {success: function() { //splice the old title at caret Position
         DeepThought.rootCollection.get(that.model.id).set({"title": newTitle}, {wait: true})
       }
@@ -278,81 +285,62 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
       }      
   },
 
-  // saveEntry: function(event, callback) {
-  //   callback = callback || function() {};
-  //   event.stopPropagation();
-  //   var id = this.model.get("id");
-  //   var formData = $("#form"+id).serializeJSON();
-  //   var that = this;
-  //   this.model.save(formData, {success: function() {
-  //     if (DeepThought.rootCollection.get(id)) //in the event it was just deleted
-  //       DeepThought.rootCollection.get(id).save({"title": formData.entry.title}, {wait: true, success: callback()})
-  //     }
-  //   });
-  // },
-
-
   backspaceEntry: function(event) {
     var caretPos = event.target.selectionStart;
 
-    if (caretPos !== 0 || caretPos !== event.target.selectionEnd)
+    if (caretPos !== 0 || caretPos !== event.target.selectionEnd) //do default of deleting text
       return;
 
     event.preventDefault();
     var title = $("#form"+this.model.id).serializeJSON().entry.title;
-
     var siblings = DeepThought.allCollections[this.model.get("parent_id")].models;
     var index = siblings.indexOf(this.model);
-    var children = DeepThought.allCollections[this.model.id];
+    var children = DeepThought.allCollections[this.model.id].models;
     var parentId = this.model.get("parent_id");
     var that = this;
 
-    if (event.shiftKey) {
+    if (event.shiftKey) { //force delete
       this.deleteEntry(event);
       return;
     }
 
-    // if (title.length === 0 && children.length === 0) { //if empty, delete
-    //   this.deleteEntry(event);
-    //   return;
-    // }
-
-
-
-    if (index === 0) { //if it's under parent, move up
-      if (children.length > 0) {
-        // this.deleteEntry(event);
+    if (title.length === 0 && children.length === 0) { //if empty, delete unless children
+        this.deleteEntry(event);
         return;
-      } else {
-        var oldTitle = $("#form"+parentId).serializeJSON().entry.title;
-        var newTitle = oldTitle + title;
-        var newCollection = DeepThought.allCollections[this.findGrandparent(this.model)];
-        var newId = parentId;
-      }
-
-    } else { //it has a previousSibling
-      var siblingId = siblings[index -1].id;
-      if (DeepThought.allCollections[siblingId].length !== 0){//if sibling has children, ignore
-        return;
-      } else {
-        var oldTitle = $("#form"+siblingId).serializeJSON().entry.title
-        var newTitle =  oldTitle + title;
-        var newCollection = DeepThought.allCollections[parentId];
-        var newId = siblingId;
-
-        children.forEach(function(child) {
-          that.relocate(child, siblingId, child.get("rank"), false);
-        })
-      }
     }
-    $('#ta'+newId).focus();
-    $('#ta'+newId).val(newTitle);
-    newCollection.findWhere({id:newId}).save({"title":newTitle}, {success:function() {
-      DeepThought.rootCollection.get(newId).set({"title":newTitle}, {wait:true});
-      $('#ta'+newId)[0].setSelectionRange(oldTitle.length, oldTitle.length);
-      that.deleteEntry(event);
-    }});
 
+    if (index === 0) { //if it's under a parent
+      if (children.length > 0) { //if it has children, do nothing
+        return;
+      } else { //combine it with the parent
+        var oldParentTitle = $("#form"+parentId).serializeJSON().entry.title;
+        var newParentTitle = oldParentTitle + title;
+        var parentCollection = DeepThought.allCollections[this.findGrandparent(this.model)];
+        $('#ta'+parentId).focus();
+        $('#ta'+parentId).val(newParentTitle);
+        parentCollection.get(parentId).save({"title":newParentTitle}, {wait: true, success:function() {
+          DeepThought.rootCollection.get(parentId).set({"title":newParentTitle}, {wait:true});
+          $('#ta'+parentId)[0].setSelectionRange(oldParentTitle.length, oldParentTitle.length);
+          that.deleteEntry(event);
+        }});
+      }
+    } else { //if it's under a sibling
+      var siblingId = siblings[index - 1].id;
+      if (DeepThought.allCollections[siblingId].length !== 0) { //if sibling has children, do nothing
+        return;
+      } //otherwise combine sibling and model title
+      var siblingTitle = $("#form"+siblingId).serializeJSON().entry.title
+      var newTitle =  siblingTitle + title;
+      $('#ta'+this.model.id).val(newTitle);
+      this.model.save({"title": newTitle}, {wait: true, success: function() {
+        DeepThought.rootCollection.get(that.model.id).set({"title":newTitle}, {wait:true});
+        $('#ta'+that.model.id)[0].setSelectionRange(siblingTitle.length, siblingTitle.length);
+      }});
+      DeepThought.allCollections[this.model.get("parent_id")].models = _.without(DeepThought.allCollections[this.model.get("parent_id")].models, DeepThought.allCollections[siblingId])
+      delete DeepThought.allCollections[siblingId];
+      delete DeepThought.allParents[siblingId];
+      DeepThought.rootCollection.get(siblingId).destroy();
+    }
   },
 
   deleteEntry: function(event) {
@@ -539,13 +527,16 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
   },
 
   relocate: function(model, new_parent_id, new_rank, focusOption) {
-    var focusOn = focusOption || true;
+    var focusOn = focusOption !== false;
     var formData = $("#form"+ model.get("id")).serializeJSON();
 
     var old_parent_id = model.get("parent_id");
     model.save({title: formData["entry"]["title"], parent_id: new_parent_id, rank: new_rank, is_new: true}, {success: function(){
       DeepThought.allCollections[old_parent_id].remove(model);
-      DeepThought.allCollections[new_parent_id].add(model, {wait: true});
+      DeepThought.allCollections[new_parent_id].add(model, {wait: true, merge:true});
+      DeepThought.rootCollection.add(model, {wait:true, merge:true});
+      DeepThought.rootCollection.fetch();
+
       DeepThought.allParents[model.get("id")] = new_parent_id;
       if (focusOn)
         $("#ta"+model.get("id")).focus();
