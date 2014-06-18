@@ -365,28 +365,8 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
       }
       if (previousSibling.get("expanded") === false){        
         this.expand(previousSibling);
-        // previousSibling.save({"expanded":true},{success: function() {
-        //   $("#ul"+previousSibling.get("id")).slideToggle();
-        //   $("#bullet"+previousSibling.get("id")).removeClass("bullet-shadow");
-        //   $("#button"+previousSibling.get("id")).value = '-';
-        // }});
       }
       this.relocate(this.model, previousSibling.get("id"), newRank);
-      //DeepThought.allParents[this.model.get("id")] = previousSibling.get("id");
-      // this.model.save({parent_id: previousSibling.get("id"), rank:newRank}, {success: function(){
-      //   DeepThought.allCollections[old_parent_id].remove(that.model);
-      //   if (previousSibling.get("expanded") === false){        
-      //     previousSibling.save({"expanded":true},{success: function() {
-      //       $("#ul"+previousSibling.get("id")).slideToggle(300);
-      //       $("#bullet"+previousSibling.get("id")).removeClass("bullet-shadow");
-      //       $("#button"+previousSibling.get("id")).value = '-';
-      //     }});
-      //   }
-      //   DeepThought.allCollections[previousSibling.get("id")].add(that.model, {wait: true});
-      //   DeepThought.allParents[that.model.get("id")] = previousSibling.get("id");
-      //   $("#ta"+that.model.id).focus();
-        //that.focusOnTextArea($("#"+that.model.id)[0]);
-      // }}) 
     }
   },
 
@@ -545,6 +525,8 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
 
   digUpHelper: function(model_id, tier) {
     var parent_id = DeepThought.allParents[model_id]
+    var grandparent = DeepThought.allParents[parent_id]
+    if (!grandparent) return;
     var uncles = DeepThought.allCollections[DeepThought.allParents[parent_id]].where({expanded: true});
     var parentPosition = uncles.indexOf(_.findWhere(uncles, {id: parent_id}));
     if (parentPosition === uncles.length - 1) {

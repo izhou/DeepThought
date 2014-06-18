@@ -53,13 +53,19 @@
               <div style='text-align: center; color:#444'><%= f.submit "Sign up", class: "uk-button uk-button-primary uk-button-large", style:"background-color:#0077dd; color:white; margin-top:0.75em" %><br>
              
             <% end %> 
+
+
+            <p><%= link_to "Sign into Demo Account", user_registration_path, method: :post %></p>
+
+
+
               
-            <%= form_for("user", html: {class: 'uk-form'}, url: user_session_path) do |f| %>
+<!--             <%= form_for("user", html: {class: 'uk-form'}, url: user_session_path) do |f| %>
               <%= f.hidden_field :email, value: "i@ire.ne" %>
               <%= f.hidden_field :password, value: "soInsecure1" %>
               <%= f.submit 'Sign in as Demo User', class: "uk-button-link", style:"color:#ddd; margin-top:0.5em"%>
               </div>
-            <% end %>
+            <% end %> -->
           </div>
         </div>
 <!-- 

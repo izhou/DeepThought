@@ -1,6 +1,6 @@
 DeepThought::Application.routes.draw do
   resources :entries
-  devise_for :users
+  devise_for :users, :controllers => { :registrations => 'users'}
 
   root to: "entries#root"
   # The priority is based upon order of creation:

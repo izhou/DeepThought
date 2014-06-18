@@ -29,7 +29,7 @@
             <li class="uk-active"><a href="">Home</a></li>
             <li><a href="#/contact">About</a></li>
             <%unless (current_user.nil?)%>
-              <li><a> <%=current_user.email%></a></li>
+              <li><a> <%=current_user.name%></a></li>
               <li><a href="/users/sign_out" data-method="delete">Logout</a></li>
             <%else%>
               <li><a href="/users/sign_in">Login</a></li>
