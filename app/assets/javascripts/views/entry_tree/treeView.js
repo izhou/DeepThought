@@ -237,13 +237,13 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
 
     $('#ta'+this.model.id).val(newTitle);
 
-    if (this.model.get("expanded") === false) {
-        this.expand(this.model);
-    }
+    // if (this.model.get("expanded") === false) {
+    //     this.expand(this.model);
+    // }
 
     //check if model has a child, if so we only care about the first one
     var firstChild = DeepThought.allCollections[this.model.id].models[0];
-    if(firstChild) { //if children, new entry will be a child
+    if(firstChild && this.model.get("expanded") === true) { //if children, new entry will be a child
       var rank = firstChild.get("rank") - 1;
 
       var newEntry = DeepThought.allCollections[this.model.id].create({
@@ -429,7 +429,7 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
       var newParentId = this.model.get("parent_id");
       var previousSibling = siblings.models[position - 1];
       if (position === 1) {
-        var newRank = previousSibling.get("rank")/2;
+        var newRank = previousSibling.get("rank") - 1;
       } else {
         var newRank = (siblings.models[position - 2].get("rank") + previousSibling.get("rank"))/2;
       }
@@ -506,6 +506,21 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
     // }});
   },
 
+
+// var newEntry = DeepThought.allCollections[this.model.get("parent_id")].create({
+//         title: oldTitle.slice(caretPos, oldTitle.length), 
+//         parent_id: this.model.get("parent_id"),
+//         rank: rank,
+//         is_new: true},
+//         {wait: true, success: function() {
+//           DeepThought.allParents[newEntry.id] = that.model.get("parent_id");
+//           DeepThought.rootCollection.add(newEntry);
+//           that.focusOnTextArea($("#"+newEntry.id)[0]);
+//         }}
+//       );
+
+
+
   relocate: function(model, new_parent_id, new_rank, focusOption) {
     var focusOn = focusOption !== false;
     var formData = $("#form"+ model.get("id")).serializeJSON();
@@ -513,7 +528,7 @@ DeepThought.Views.treeView = Backbone.Marionette.CompositeView.extend({
     var old_parent_id = model.get("parent_id");
     model.save({title: formData["entry"]["title"], parent_id: new_parent_id, rank: new_rank, is_new: true}, {success: function(){
       DeepThought.allCollections[old_parent_id].remove(model);
-      DeepThought.allCollections[new_parent_id].add(model, {wait: true, merge:true});
+      DeepThought.allCollections[new_parent_id].set(model, {wait: true, merge:true, remove:false});
       DeepThought.rootCollection.add(model, {wait:true, merge:true});
       DeepThought.rootCollection.fetch();
 

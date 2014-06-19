@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  require 'enumerator'
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -16,7 +17,43 @@ class User < ActiveRecord::Base
   def seed_entries
     home = Entry.create(title: 'Home', rank:0, user_id:self.id)
     if guest?
-      home.children.create(title: 'You are a guest!', rank: 0, user_id:self.id)
+      welcome = home.children.create(title: 'Welcome to DeepThought!', rank: 0, user_id: self.id)
+      welcomeChildren = [
+        'Please note that as a guest, you will not be able to log back into this account after leaving.',
+        '⇧+ delete on the parent bullet to start with a blank page. Otherwise, read more about DeepThought below!',
+        'Features of DeepThought',
+        'Pending Features'
+      ]
+
+      welcomeChildren.map!.with_index { |text, i|
+        welcome.children.create(title: text, rank: i, user_id: self.id)
+      }
+      featureChildren = [
+        'Keyboard Shortcuts',
+        'Zooming in and out of pages',
+        'Tabbing in and out with ease',
+        'Moving bullets around the page',
+        'Starring pages',
+      ]
+
+      featureChildren.map!.with_index  { |text, i|
+        welcomeChildren[2].children.create(title: text, rank: i, user_id: self.id)
+      }
+
+      featureChildren[0].children.create(title: 'Click the below tab to see all the available commands', rank: 0, user_id: self.id)
+      featureChildren[1].children.create(title: 'Click on the bullet point on the left to zoom into this page', rank: 0, user_id: self.id)
+      featureChildren[1].children.create(title: 'Navigate quickly with keyboard shortcuts', rank: 1, user_id: self.id)
+      featureChildren[4].children.create(title: 'Keep track of your important pages, by clicking that star in the top right corner', rank: 0, user_id: self.id)
+      featureChildren[4].children.create(title: 'View all starred pages quickly by clicking on the star button in the header', rank: 1, user_id: self.id)
+
+      pendingChildren = [
+        'Drag and drop to move around tasks',
+        'Improved search'
+      ]
+
+      pendingChildren.map!.with_index  { |text, i|
+        welcomeChildren[3].children.create(title: text, rank: i, user_id: self.id)
+      }
     end
   end
 
