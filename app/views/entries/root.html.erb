@@ -16,9 +16,9 @@
           <a href="#" class="uk-navbar-brand">DeepThought</a>
           
           <div class="uk-navbar-content">
-            <form class="uk-search">
-              <input class="uk-search-field" type="search" placeholder="Search...">
-              <button class="uk-search-close" type="reset"></button>
+            <form class="uk-search" onsubmit="redirect(); return false;">
+              <input class="uk-search-field" id="searchTerm" placeholder="Search..." type="text">
+              <!-- <button class="uk-search-close" type="reset"></button> -->
             </form>
           </div>
           <a id="showStars" class="uk-navbar-content"><i class='fa fa-star'></i></a>
@@ -27,7 +27,7 @@
           <ul class="uk-navbar-nav uk-hidden-small uk-navbar-attached">
             
             <li class="uk-active"><a href="">Home</a></li>
-            <li><a href="#/contact">About</a></li>
+<!--             <li><a href="#/contact">About</a></li> -->
             <%unless (current_user.nil?)%>
               <li><a> <%=current_user.name%></a></li>
               <li><a href="/users/sign_out" data-method="delete">Logout</a></li>
@@ -62,6 +62,15 @@
         <div class="uk-dropdown uk-dropdown-small uk-dropdown-up uk-dropdown-width-1">
           <table class="uk-table">
              <tbody>
+
+               <tr>
+                  <th>Zoom in</th>
+                  <td>⌘ + Ctrl + →</td>
+                </tr>
+                <tr>
+                  <th>Zoom out</th>
+                  <td>⌘ + Ctrl + ←</td>
+                </tr>
                 <tr>
                   <th>Tab in</th>
                   <td>Tab</td>
@@ -70,11 +79,6 @@
                   <th>Tab out</th>
                   <td>⇧ + Tab</td>
                 </tr>
-                <tr>
-                  <th>Expand/<br>collapse</th>
-                  <td>⇧ + Space</td>
-                </tr><br>
-                <tr>
                   <th>Move up</th>
                   <td>⇧ + ↑</td>
                 </tr>
@@ -92,16 +96,14 @@
                 </tr>
                 <tr>
                   <th>Delete</th>
-                  <td>⇧ + Backspace</td>
+                  <td>⇧ + Delete</td>
                 </tr>
                 <tr>
-                  <th>Zoom in</th>
-                  <td>⌘ + Ctrl + →</td>
-                </tr>
+                  <th>Expand/<br>collapse</th>
+                  <td>⇧ + Space</td>
+                </tr><br>
                 <tr>
-                  <th>Zoom out</th>
-                  <td>⌘ + Ctrl + ←</td>
-                </tr>
+ 
              </tbody>
           </table>
         </div>
@@ -111,6 +113,11 @@
 </html>
 
 <script>
+
+var redirect = function() {
+    console.log('foo');
+   DeepThought.router.navigate("#/search/"+document.getElementById('searchTerm').value); 
+}
 
 console.log("foo");
 $(document).ready(function(){

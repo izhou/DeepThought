@@ -19,19 +19,19 @@ class User < ActiveRecord::Base
     if guest?
       welcome = home.children.create(title: 'Welcome to DeepThought!', rank: 0, user_id: self.id)
       welcomeChildren = [
-        'Please note that as a guest, you will not be able to log back into this account after leaving.',
-        '⇧+ delete on the parent bullet to start with a blank page. Otherwise, read more about DeepThought below!',
+        '⇧+ delete the top bullet to start with a blank page.',
+        '+/- sign to expand/collapse. Collapsed bullets are shaded. Try clicking on the one below:',
         'Features of DeepThought',
         'Pending Features'
       ]
 
       welcomeChildren.map!.with_index { |text, i|
-        welcome.children.create(title: text, rank: i, user_id: self.id)
+        expanded = (i < 2) ? true : false
+        welcome.children.create(title: text, rank: i, user_id: self.id, expanded: expanded)
       }
       featureChildren = [
         'Keyboard Shortcuts',
         'Zooming in and out of pages',
-        'Tabbing in and out with ease',
         'Moving bullets around the page',
         'Starring pages',
       ]
@@ -40,11 +40,13 @@ class User < ActiveRecord::Base
         welcomeChildren[2].children.create(title: text, rank: i, user_id: self.id)
       }
 
-      featureChildren[0].children.create(title: 'Click the below tab to see all the available commands', rank: 0, user_id: self.id)
-      featureChildren[1].children.create(title: 'Click on the bullet point on the left to zoom into this page', rank: 0, user_id: self.id)
-      featureChildren[1].children.create(title: 'Navigate quickly with keyboard shortcuts', rank: 1, user_id: self.id)
-      featureChildren[4].children.create(title: 'Keep track of your important pages, by clicking that star in the top right corner', rank: 0, user_id: self.id)
-      featureChildren[4].children.create(title: 'View all starred pages quickly by clicking on the star button in the header', rank: 1, user_id: self.id)
+      featureChildren[0].children.create(title: 'Allow for quick navigation and rearrangement.', rank: 0, user_id: self.id)
+      featureChildren[1].children.create(title: 'Clicking on the bullet point zooms in. Try it out!', rank: 0, user_id: self.id)
+      featureChildren[1].children.create(title: 'Clicking on header links zooms out.', rank: 1, user_id: self.id)
+      featureChildren[1].children.create(title: '⌘ + Ctrl + →/←', rank: 2, user_id: self.id)
+      featureChildren[2].children.create(title: '⇧ + arrow, or tab in and out', rank: 0, user_id: self.id)
+      featureChildren[3].children.create(title: 'Keep track of your important pages, by clicking that star in the top right corner', rank: 0, user_id: self.id)
+      featureChildren[3].children.create(title: 'View all starred pages quickly by clicking on the star button in the header', rank: 1, user_id: self.id)
 
       pendingChildren = [
         'Drag and drop to move around tasks',
@@ -54,6 +56,9 @@ class User < ActiveRecord::Base
       pendingChildren.map!.with_index  { |text, i|
         welcomeChildren[3].children.create(title: text, rank: i, user_id: self.id)
       }
+
+      # welcomeChildren[3].save(expanded: false)
+
     end
   end
 

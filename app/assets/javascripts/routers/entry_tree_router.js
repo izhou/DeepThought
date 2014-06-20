@@ -54,8 +54,19 @@ DeepThought.Router = Backbone.Router.extend({
     });
 
     var searchParents = searchResults.map(function(entry) {
-      return DeepThought.rootCollection.get(entry.get("parent_id"));
+      return DeepThought.rootCollection.get(entry.id);
     });
+
+    if (searchParents.length !== 0) {
+      var searchShow = new DeepThought.Views.nodeView({
+        collection: new DeepThought.Collections.EntryTree(searchParents),
+        itemView: DeepThought.Views.treeView,
+        root_id: root.get("id")
+      });      
+    } else {
+      var searchShow = new DeepThought.Views.searchlessView({
+      })
+    }
 
     // var addParent = function(entry) {
     //   var parent = DeepThought.rootCollection.get(entry.get("parent_id"));
@@ -66,11 +77,7 @@ DeepThought.Router = Backbone.Router.extend({
     //   }
     // };
     // searchResults.forEach(function(entry) {addParent(entry)} );
-    var searchShow = new DeepThought.Views.nodeView({
-      collection: new DeepThought.Collections.EntryTree(searchParents),
-      itemView: DeepThought.Views.treeView,
-      root_id: root.get("id")
-    });
+
 
     $("#content").html(searchShow.render().$el);
     $('textarea:contains('+term+') ').addClass("highlighted"); 
